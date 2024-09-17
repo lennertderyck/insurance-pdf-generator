@@ -13,8 +13,8 @@ const EventForm: FC<Props> = ({ onSubmit }) => {
     <Form ref={formRef} onSubmit={(data) => {
       onSubmit(data);
     }}>
-      <Input label="Betaald bedrag" name="payment.amount" type="number" min={0} />
-      <Input label="Bedrag op" name="payment.date" type="date" />
+      <Input label="Prijs" name="payment.amount" type="number" min={0} />
+      <Input label="Betaald op" name="payment.date" type="date" />
       <Input label="Activiteit start" name="period.start" type="date" />
       <Input label="Activiteit eind" name="period.end" type="date" />
       <button type="submit">Submit</button>
