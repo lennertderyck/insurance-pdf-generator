@@ -2,3 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+button {
+  @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
+}
+
+input, select {
+  @apply border border-gray-500 inline-block;
+}
+
+hr {
+  @apply border-b my-8;
+}
+
+h3 {
+  @apply text-2xl;
+}

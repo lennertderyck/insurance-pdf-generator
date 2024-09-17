@@ -74,7 +74,7 @@ const App: FC<Props> = () => {
   }
   
   return (
-    <div>
+    <div className="p-16">
       <h3>Nieuwe persoon</h3>
       <PersonForm onSubmit={addPerson} />
       <hr />
@@ -90,17 +90,25 @@ const App: FC<Props> = () => {
       <select value={group} onChange={event => setGroup(event.target.value)}>
         <option value="O1306G">Haegepoorters</option>
         <option value="O1307G">HDB - Hubert De Bruyker</option>
+        <option value="O1304G">Sint-Bernadette</option>
       </select>
-      <p>Groepsnaam: {selectedGroupData?.naam}</p>
-      <p>Email: {selectedGroupData?.email}</p>
-      <p>Adres: { address }</p>
+      <p>
+        Groepsnaam: {selectedGroupData?.naam}<br/>
+        Email: {selectedGroupData?.email}<br/>
+        Adres: { address }</p>
+      <p>{`(Opmerking voor (groeps)leiding: Gegevens worden rechtstreeks uit de Groepsadministratie overgenomen. Zie "groepsinstellingen".)`}</p>
       <hr />
       <h3>Genereer formulier</h3>
+      <div className="*:text-red-500">
       {persons?.length === 0 && <p>Voeg eerst een persoon toe om het formulier te genereren</p>}
-      {!event && <p>Voeg eerst de gegevens van de activiteit toe om het formulier te genereren</p>}
-      { persons?.map((person, index) => (
-        <div key={index}>{ person.name } {person.lastName}: {<button disabled={!event} onClick={() => generatePdf(person, event, selectedGroupData)}>Genereer formulier</button>} | <button onClick={() => handleDeletePerson(person)}>Verwijder {person.name}</button></div>
-      ))}
+        {!event && <p>Voeg eerst de gegevens van de activiteit toe om het formulier te genereren</p>}
+        {!selectedGroupData && <p>Wacht tot de gegevens van de geselecteerde groep ingeladen zijn</p>}
+      </div>
+      <ul>
+        { persons?.map((person, index) => (
+          <li key={index}>{ person.name } {person.lastName}: {<button disabled={!event} onClick={() => generatePdf(person, event, selectedGroupData)}>Genereer formulier</button>} | <button onClick={() => handleDeletePerson(person)}>Verwijder {person.name}</button></li>
+        ))}
+      </ul>
     </div>
   )
 }
