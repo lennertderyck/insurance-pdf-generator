@@ -88,7 +88,7 @@ const App: FC<Props> = () => {
       <h3>Genereer formulier</h3>
       <div className="*:text-red-500 mb-8">
         {persons?.length === 0 && <p>Voeg eerst een persoon toe om het formulier te genereren</p>}
-        {events?.length === 0 && <p>Voeg eerst de gegevens van de activiteit toe om het formulier te genereren</p>}
+        {events?.length === 0 && <p>Voeg eerst de gegevens van een activiteit toe om het formulier te genereren</p>}
         {!selectedGroupData && <p>Wacht tot de gegevens van de geselecteerde groep ingeladen zijn</p>}
       </div>
       <div>

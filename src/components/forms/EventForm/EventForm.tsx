@@ -15,11 +15,13 @@ const EventForm: FC<Props> = ({ onSubmit }) => {
       formRef.current?.reset();
     }}>
       <Input label="Naam" name="name" />
+      <h4 className="mt-4">Betaling</h4>
       <Input label="Prijs" name="payment.amount" type="number" min={0} />
       <Input label="Betaald op" name="payment.date" type="date" />
-      <Input label="Activiteit start" name="period.start" type="date" />
-      <Input label="Activiteit eind" name="period.end" type="date" />
-      <button type="submit">Submit</button>
+      <h4 className="mt-4">Periode</h4>
+      <Input label="Startdatum" name="period.start" type="date" />
+      <Input label="Einddatum" name="period.end" type="date" />
+      <button type="submit" className="mt-4">Submit</button>
     </Form>
   )
 }

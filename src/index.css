@@ -17,3 +17,7 @@ hr {
 h3 {
   @apply text-2xl;
 }
+
+h4 {
+  @apply text-xl;
+}
