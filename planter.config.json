@@ -1,0 +1,54 @@
+{
+  "version": 6,
+  "name": "insurance-pdf-generator",
+  "library": "react",
+  "installer": "npm",
+  "hasTs": true,
+  "layout": "sass-modules",
+  "prettier": false,
+  "packages": [
+    "React-router",
+    "Tailwind",
+    "Zustand",
+    "Axios",
+    "React-Query"
+  ],
+  "structure": "BEP (recommended)",
+  "mswPath": "src/mocks/endpoints",
+  "miragePath": "src/mocks/endpoints",
+  "hookPath": "src/utils/hooks",
+  "dataPath": "src/utils/data",
+  "funcsPath": "src/utils/funcs",
+  "assetImagesPath": "src/assets/images",
+  "assetFontsPath": "src/assets/fonts",
+  "assetMiscPath": "src/assets/misc",
+  "contextPath": "src/state/contexts",
+  "reduxActionPath": "src/state/actions",
+  "reduxStorePath": "src/state/store",
+  "reduxReducerPath": "src/state/reducers",
+  "zustandStoresPath": "src/state/stores",
+  "localesPath": "src/locales",
+  "typesPath": "src/types",
+  "components": {
+    "basics": {
+      "component": "src/components/basics/@pascalCase/@pascalCase.@ext",
+      "style": "src/components/basics/@pascalCase/@pascalCase.@ext",
+      "test": "src/components/basics/@pascalCase/tests/@pascalCase.@ext"
+    },
+    "elements": {
+      "component": "src/components/elements/@pascalCase/@pascalCase.@ext",
+      "style": "src/components/elements/@pascalCase/@pascalCase.@ext",
+      "test": "src/components/elements/@pascalCase/tests/@pascalCase.@ext"
+    },
+    "pages": {
+      "component": "src/components/pages/@pascalCase/@pascalCase.@ext",
+      "style": "src/components/pages/@pascalCase/@pascalCase.@ext",
+      "test": "src/components/pages/@pascalCase/tests/@pascalCase.@ext"
+    },
+    "forms": {
+      "component": "src/components/forms/@pascalCase/@pascalCase.@ext",
+      "style": "src/components/forms/@pascalCase/@pascalCase.@ext"
+    }
+  },
+  "usePropTypes": false
+}
