@@ -14,17 +14,17 @@ import { cmTemplate } from "./utils/data/templates/cm/schema";
 
 interface Props {};
 
-const App: FC<Props> = () => {
-  const [event] = useState<any | null>(null);
-  const [broker, setBroker] = useState<string>('cm');
-  const [group, setGroup] = useState<string>('O1306G');
-  
+const App: FC<Props> = () => {  
   const persons = usePersistentPersonsStore(state => state.persons);
   const addPerson = usePersistentPersonsStore(state => state.addPerson);
   const deletePerson = usePersistentPersonsStore(state => state.deletePerson);
   
   const events = usePersistentEventsStore(state => state.events);
   const addEvent = usePersistentEventsStore(state => state.addEvent);
+  
+  const [event, setEvent] = useState<any | null>(events[0]);
+  const [broker, setBroker] = useState<string>('cm');
+  const [group, setGroup] = useState<string>('O1306G');
   
   const { data: selectedGroupData } = useQuery({
     queryKey: ['group', group],
@@ -83,7 +83,10 @@ const App: FC<Props> = () => {
       <PersonForm onSubmit={addPerson} />
       <hr />
       <h3>Nieuwe activiteit</h3>
-      <EventForm onSubmit={addEvent} />
+      <EventForm onSubmit={(data) => {
+        addEvent(data);
+        setEvent(data);
+      }} />
       <hr />
       <h3>Genereer formulier</h3>
       <div className="*:text-red-500 mb-8">
@@ -107,10 +110,10 @@ const App: FC<Props> = () => {
       </div>
       <div>
         <label>Activiteit: </label>
-        <select className="mb-4">
+        <select className="mb-4" onChange={event => setEvent(events[parseInt(event.target.value)])}>
           <option disabled>Selecteer een activiteit</option>
           {events?.map((event, index) => (
-            <option key={index} value={event}>{event.name} van {dayjs(event?.period?.start).format('DD/MM/YYYY')} - {dayjs(event?.period?.end).format('DD/MM/YYYY')}</option>
+            <option value={index} key={index}>{event.name} van {dayjs(event?.period?.start).format('DD/MM/YYYY')} - {dayjs(event?.period?.end).format('DD/MM/YYYY')}</option>
           ))}
         </select>
       </div>
