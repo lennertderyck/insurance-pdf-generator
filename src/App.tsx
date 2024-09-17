@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import { FC, useCallback, useState } from 'react';
 import EventForm from "./components/forms/EventForm/EventForm";
 import PersonForm from './components/forms/PersonForm/PersonForm';
+import { usePersistentEventsStore } from "./state/stores/usePersistentEventsStore";
 import { usePersistentPersonsStore } from './state/stores/usePersistentPersonsStore';
 import { stamp } from "./utils/data/stamp";
 import { cmTemplate } from "./utils/data/templates/cm/schema";
@@ -14,13 +15,16 @@ import { cmTemplate } from "./utils/data/templates/cm/schema";
 interface Props {};
 
 const App: FC<Props> = () => {
-  const [event, setEvent] = useState<any | null>(null);
+  const [event] = useState<any | null>(null);
   const [broker, setBroker] = useState<string>('cm');
   const [group, setGroup] = useState<string>('O1306G');
   
   const persons = usePersistentPersonsStore(state => state.persons);
   const addPerson = usePersistentPersonsStore(state => state.addPerson);
   const deletePerson = usePersistentPersonsStore(state => state.deletePerson);
+  
+  const events = usePersistentEventsStore(state => state.events);
+  const addEvent = usePersistentEventsStore(state => state.addEvent);
   
   const { data: selectedGroupData } = useQuery({
     queryKey: ['group', group],
@@ -78,37 +82,44 @@ const App: FC<Props> = () => {
       <h3>Nieuwe persoon</h3>
       <PersonForm onSubmit={addPerson} />
       <hr />
-      <h3>Activiteit</h3>
-      <EventForm onSubmit={setEvent} />
-      <hr />
-      <h3>Ziekenfonds</h3>
-      <select value={broker} onChange={event => setBroker(event.target.value)}>
-        <option value="cm">CM</option>
-      </select>
-      <hr />
-      <h3>Groep</h3>
-      <select value={group} onChange={event => setGroup(event.target.value)}>
-        <option value="O1306G">Haegepoorters</option>
-        <option value="O1307G">HDB - Hubert De Bruyker</option>
-        <option value="O1304G">Sint-Bernadette</option>
-      </select>
-      <p>
-        Groepsnaam: {selectedGroupData?.naam}<br/>
-        Email: {selectedGroupData?.email}<br/>
-        Adres: { address }</p>
-      <p>{`(Opmerking voor (groeps)leiding: Gegevens worden rechtstreeks uit de Groepsadministratie overgenomen. Zie "groepsinstellingen".)`}</p>
+      <h3>Nieuwe activiteit</h3>
+      <EventForm onSubmit={addEvent} />
       <hr />
       <h3>Genereer formulier</h3>
-      <div className="*:text-red-500">
-      {persons?.length === 0 && <p>Voeg eerst een persoon toe om het formulier te genereren</p>}
-        {!event && <p>Voeg eerst de gegevens van de activiteit toe om het formulier te genereren</p>}
+      <div className="*:text-red-500 mb-8">
+        {persons?.length === 0 && <p>Voeg eerst een persoon toe om het formulier te genereren</p>}
+        {events?.length === 0 && <p>Voeg eerst de gegevens van de activiteit toe om het formulier te genereren</p>}
         {!selectedGroupData && <p>Wacht tot de gegevens van de geselecteerde groep ingeladen zijn</p>}
+      </div>
+      <div>
+        <label>Ziekenfonds: </label>
+        <select value={broker} onChange={event => setBroker(event.target.value)}>
+          <option value="cm">CM</option>
+        </select>
+      </div>
+      <div>
+        <label>Groep: </label>
+        <select value={group} onChange={event => setGroup(event.target.value)}>
+          <option value="O1306G">Haegepoorters</option>
+          <option value="O1307G">HDB - Hubert De Bruyker</option>
+          <option value="O1304G">Sint-Bernadette</option>
+        </select>
+      </div>
+      <div>
+        <label>Genereer voor: </label>
+        <select className="mb-4">
+          <option disabled>Selecteer een activiteit</option>
+          {events?.map((event, index) => (
+            <option key={index} value={event}>{event.name} van {dayjs(event?.period?.start).format('DD/MM/YYYY')} - {dayjs(event?.period?.end).format('DD/MM/YYYY')}</option>
+          ))}
+        </select>
       </div>
       <ul>
         { persons?.map((person, index) => (
           <li key={index}>{ person.name } {person.lastName}: {<button disabled={!event} onClick={() => generatePdf(person, event, selectedGroupData)}>Genereer formulier</button>} | <button onClick={() => handleDeletePerson(person)}>Verwijder {person.name}</button></li>
         ))}
       </ul>
+      <p className="mt-12">{`(Opmerking voor (groeps)leiding: Gegevens worden rechtstreeks uit de Groepsadministratie overgenomen. Zie "groepsinstellingen".)`}</p>
     </div>
   )
 }

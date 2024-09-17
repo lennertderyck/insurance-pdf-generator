@@ -12,7 +12,9 @@ const EventForm: FC<Props> = ({ onSubmit }) => {
   return (
     <Form ref={formRef} onSubmit={(data) => {
       onSubmit(data);
+      formRef.current?.reset();
     }}>
+      <Input label="Naam" name="name" />
       <Input label="Prijs" name="payment.amount" type="number" min={0} />
       <Input label="Betaald op" name="payment.date" type="date" />
       <Input label="Activiteit start" name="period.start" type="date" />
