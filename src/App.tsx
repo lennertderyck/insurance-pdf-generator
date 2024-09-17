@@ -18,6 +18,10 @@ const App: FC<Props> = () => {
   const [broker, setBroker] = useState<string>('cm');
   const [group, setGroup] = useState<string>('O1306G');
   
+  const persons = usePersistentPersonsStore(state => state.persons);
+  const addPerson = usePersistentPersonsStore(state => state.addPerson);
+  const deletePerson = usePersistentPersonsStore(state => state.deletePerson);
+  
   const { data: selectedGroupData } = useQuery({
     queryKey: ['group', group],
     queryFn: async () => {
@@ -25,9 +29,6 @@ const App: FC<Props> = () => {
       return await response.json();
     }
   })
-    
-  const persons = usePersistentPersonsStore(state => state.persons);
-  const addPerson = usePersistentPersonsStore(state => state.addPerson);
   
   const address = `${selectedGroupData?.adressen?.[0]?.straat} ${selectedGroupData?.adressen?.[0]?.nummer}, ${selectedGroupData?.adressen?.[0]?.postcode} ${selectedGroupData?.adressen?.[0]?.gemeente}`
     
@@ -65,6 +66,13 @@ const App: FC<Props> = () => {
     window.open(URL.createObjectURL(blob));
   }, [address, selectedGroupData])
   
+  const handleDeletePerson = (person: any) => {
+    const confirmed = window.confirm(`Ben je zeker dat je deze ${person.name} ${person.lastName} (${person.nrn}) wilt verwijderen?`);
+    if (confirmed) {
+      deletePerson(person.nrn);
+    }
+  }
+  
   return (
     <div>
       <h3>Nieuwe persoon</h3>
@@ -89,8 +97,9 @@ const App: FC<Props> = () => {
       <hr />
       <h3>Genereer formulier</h3>
       {persons?.length === 0 && <p>Voeg eerst een persoon toe om het formulier te genereren</p>}
+      {!event && <p>Voeg eerst de gegevens van de activiteit toe om het formulier te genereren</p>}
       { persons?.map((person, index) => (
-        <div key={index}>{ person.name } {<button disabled={!event} onClick={() => generatePdf(person, event, selectedGroupData)}>Genereer formulier</button>}</div>
+        <div key={index}>{ person.name } {person.lastName}: {<button disabled={!event} onClick={() => generatePdf(person, event, selectedGroupData)}>Genereer formulier</button>} | <button onClick={() => handleDeletePerson(person)}>Verwijder {person.name}</button></div>
       ))}
     </div>
   )

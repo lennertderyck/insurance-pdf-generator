@@ -12,7 +12,7 @@ export const usePersistentPersonsStore = create(
     set => ({
       persons: [],
       addPerson: (person) => set((state) => ({ persons: [...state.persons, person] })),
-      deletePerson: (id) => set((state) => ({ persons: state.persons.filter(person => person.rnr !== id) })),
+      deletePerson: (id) => set((state) => ({ persons: state.persons.filter(person => person.nrn !== id) })),
     }),
     {
       name: "personsStore", // unique name
