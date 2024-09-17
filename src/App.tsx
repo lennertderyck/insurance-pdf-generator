@@ -106,7 +106,7 @@ const App: FC<Props> = () => {
         </select>
       </div>
       <div>
-        <label>Genereer voor: </label>
+        <label>Activiteit: </label>
         <select className="mb-4">
           <option disabled>Selecteer een activiteit</option>
           {events?.map((event, index) => (
