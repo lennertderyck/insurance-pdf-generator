@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.prefix, .suffix {
+  align-self: center;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.subheader {
+  @apply text-gray-600 text-base leading-4;
+}

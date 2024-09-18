@@ -48,6 +48,9 @@
     "forms": {
       "component": "src/components/forms/@pascalCase/@pascalCase.@ext",
       "style": "src/components/forms/@pascalCase/@pascalCase.@ext"
+    },
+    "navigation": {
+      "component": "src/components/navigation/@pascalCaseNavigation.@ext"
     }
   },
   "usePropTypes": false

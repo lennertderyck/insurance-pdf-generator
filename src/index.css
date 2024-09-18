@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-button {
+button, .button {
+  display: block;
+  width: fit-content;
   @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
 }
 
@@ -20,4 +22,8 @@ h3 {
 
 h4 {
   @apply text-xl;
+}
+
+h5 {
+  @apply text-lg;
 }
