@@ -1,9 +1,11 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { Event } from "../../types/identities";
 
 interface UsePersistentEventsStoreInterface {
-  events: any[];
-  addEvent: (event: any) => void;
+  events: Event[];
+  addEvent: (event: Event) => void;
+  deleteEvent: (index: number) => void;
 }
 
 export const usePersistentEventsStore = create(
@@ -11,6 +13,7 @@ export const usePersistentEventsStore = create(
     set => ({
       events: [],
       addEvent: (event) => set(state => ({ events: [...state.events, event] })),
+      deleteEvent: (index) => set(state => ({ events: state.events.filter((_, i) => i !== index) })),
     }),
     {
       name: "eventsStore", // unique name

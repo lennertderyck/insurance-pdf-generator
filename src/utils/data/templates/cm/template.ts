@@ -1,4 +1,4 @@
-import { file } from './file';
+import { file } from './pdf';
 export const cmTemplate = {
   "schemas": [
     {

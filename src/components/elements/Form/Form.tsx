@@ -4,10 +4,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 interface Props extends PropsWithChildren {
   onSubmit: (data: any) => void;
   ref?: any;
+  defaultValues?: any;
 };
 
-const Form: FC<Props> = forwardRef<HTMLFormElement, Props>(({ onSubmit, children }, ref) => {
-  const methods = useForm();
+const Form: FC<Props> = forwardRef<HTMLFormElement, Props>(({ onSubmit, children, defaultValues, }, ref) => {
+  const methods = useForm({ defaultValues});
   
   return (
     <FormProvider {...methods}>

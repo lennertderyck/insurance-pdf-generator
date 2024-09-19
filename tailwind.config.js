@@ -5,6 +5,10 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    fontFamily: {
+      'display': ['Bricolage Grotesque', 'sans-serif'],
+      'body': ['Bricolage Grotesque', 'sans-serif'],
+    },
     extend: {},
   },
   plugins: [],

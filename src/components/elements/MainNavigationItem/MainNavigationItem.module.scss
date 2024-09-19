@@ -1,0 +1,8 @@
+.base {
+  display: block;
+  @apply bg-transparent rounded-lg p-4;
+}
+
+.active {
+  @apply bg-gray-200 rounded-lg p-4;
+}

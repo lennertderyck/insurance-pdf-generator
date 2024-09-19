@@ -1,9 +1,10 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { Person } from "../../types/identities";
 
 interface UsePersistentPersonsStoreInterface {
-  persons: any[];
-  addPerson: (person: any) => void;
+  persons: Person[];
+  addPerson: (person: Person) => void;
   deletePerson: (id: string) => void;
 }
 
