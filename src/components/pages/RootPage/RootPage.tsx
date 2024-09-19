@@ -14,7 +14,7 @@ const RootPage: FC<Props> = () => {
           <MainNavigationItem to="/events/register">Activiteiten</MainNavigationItem>
         </nav>
       </div>
-      <div className="flex-1 bg-white p-12 rounded-3xl shadow-lg overflow-scroll">
+      <div className="flex-1 bg-white p-6 md:p-12 rounded-3xl shadow-lg overflow-scroll">
         <Outlet />
       </div>
     </div>
