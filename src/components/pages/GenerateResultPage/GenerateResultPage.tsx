@@ -66,7 +66,7 @@ const GenerateResultPage: FC<Props> = () => {
     }
   }, [person, selectedGroupData, event])
   
-  useEffect(() => {
+  const generateAndDownload = useCallback(async () => {
     if (person && event && selectedGroupData) {
       generatePdf().then((blob) => {
         if (blob) {
@@ -74,7 +74,11 @@ const GenerateResultPage: FC<Props> = () => {
         }
       });
     }
-  }, [generatePdf])
+  }, [person, event, selectedGroupData, generatePdf])
+  
+  useEffect(() => {
+    generateAndDownload()
+  }, [generateAndDownload])
   
   return (
     <div className="flex flex-col items-center justify-center h-full">
@@ -88,6 +92,7 @@ const GenerateResultPage: FC<Props> = () => {
         <>
           <h3>Het formulier wordt aangemaakt...</h3>
           <p>Verlaat deze pagina niet zolang het niet geopend of gedownload is</p>
+          <button onClick={generateAndDownload}>Opnieuw genereren</button>
         </>
       )}
     </div>
