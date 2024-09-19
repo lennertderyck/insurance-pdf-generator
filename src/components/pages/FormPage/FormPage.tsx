@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { usePersistentEventsStore } from "../../../state/stores/usePersistentEventsStore";
 import { usePersistentPersonsStore } from "../../../state/stores/usePersistentPersonsStore";
 import { Person } from "../../../types/identities";
+import Icon from '../../basics/Icon/Icon';
 import EventCard from "../../elements/EventCard/EventCard";
 import PersonCard from "../../elements/PersonCard/PersonCard";
 import Section from "../../elements/Section/Section";
@@ -41,6 +42,15 @@ const FormPage: FC<Props> = () => {
   
   return (
     <>
+      <div className="bg-gray-100 p-4 md:p-6 rounded-xl mb-12 md:mb-16 flex flex-row gap-4">
+        <div>
+          <Icon name="spy-fill" size="medium" />
+        </div>
+        <div>
+          <h4 className="font-semibold mb-1 leading-5">Privacy</h4>
+          <p>Je gegevens worden uitsluitend lokaal opgeslagen en verwerkt. Hierdoor blijven ze volledig in jouw beheer en wordt de veiligheid van je data gegarandeerd.<br/>Je data wordt dus niet met ons of externe partijen gedeeld.</p>
+        </div>
+      </div>
       <Section
         icon="shining-fill"
         title="Geregistreerde personen"
