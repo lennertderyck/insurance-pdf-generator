@@ -3,7 +3,7 @@ import { barcodes, image, text } from '@pdfme/schemas';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { FC, useCallback, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { usePersistentEventsStore } from '../../../state/stores/usePersistentEventsStore';
 import { usePersistentPersonsStore } from '../../../state/stores/usePersistentPersonsStore';
 import { stamp } from '../../../utils/data/stamp';
@@ -15,9 +15,7 @@ const GenerateResultPage: FC<Props> = () => {
   const [searchParams] = useSearchParams();
   const personParam = searchParams.get('person');
   const eventParam = Number(searchParams.get('event'));
-  
-  console.log(searchParams.get('event'))
-  
+    
   const person = usePersistentPersonsStore(state => state.persons.find((person: any) => person.nrn === personParam));
   const event = usePersistentEventsStore(state => state.events[eventParam]);
   
@@ -69,16 +67,20 @@ const GenerateResultPage: FC<Props> = () => {
   }, [person, selectedGroupData, event])
   
   useEffect(() => {
-    generatePdf().then((blob) => {
-      if (blob) {
-        window.location.href = URL.createObjectURL(blob);
-      }
-    });
+    if (person && event && selectedGroupData) {
+      generatePdf().then((blob) => {
+        if (blob) {
+          window.location.href = URL.createObjectURL(blob);
+        }
+      });
+    }
   }, [generatePdf])
   
   return (
-    <div>
-      
+    <div className="flex flex-col items-center justify-center h-full">
+      <h3>Er ging iets fout bij het genereren van het formulier</h3>
+      <p>Ga terug en probeer het opnieuw</p>
+      <Link to="/" className="button mt-4">Startpagina</Link>
     </div>
   )
 }

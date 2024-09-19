@@ -21,7 +21,7 @@ const EventForm: FC<Props> = ({ onSubmit }) => {
       <h4 className="mt-4">Periode</h4>
       <Input label="Startdatum" name="period.start" type="date" />
       <Input label="Einddatum" name="period.end" type="date" />
-      <button type="submit" className="mt-4">Submit</button>
+      <button type="submit" className="mt-4">Activiteit toevoegen</button>
     </Form>
   )
 }

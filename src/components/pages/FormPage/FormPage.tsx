@@ -1,5 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Link } from "react-router-dom";
 import { usePersistentEventsStore } from "../../../state/stores/usePersistentEventsStore";
 import { usePersistentPersonsStore } from "../../../state/stores/usePersistentPersonsStore";
@@ -18,18 +17,6 @@ const FormPage: FC<Props> = () => {
   
   const events = usePersistentEventsStore(state => state.events);
   const deleteEvent = usePersistentEventsStore(state => state.deleteEvent);
-  
-  const [event, setEvent] = useState<any | null>(events[0]);
-  const [broker, setBroker] = useState<string>('cm');
-  const [group, setGroup] = useState<string>('O1306G');
-  
-  const { data: selectedGroupData } = useQuery({
-    queryKey: ['group', group],
-    queryFn: async () => {
-      const response = await fetch(`https://corsproxy.io/?https%3A%2F%2Fgroepsadmin.scoutsengidsenvlaanderen.be%2Fgroepsadmin%2Frest-ga%2Fgroep%2F${group}`);
-      return await response.json();
-    }
-  })
     
   const handleDeletePerson = (person: Person) => {
     const confirmed = window.confirm(`Ben je zeker dat je deze ${person.name} ${person.lastName} (${person.nrn}) wilt verwijderen?`);
@@ -90,15 +77,14 @@ const FormPage: FC<Props> = () => {
       </Section>
       <Section
         title="Formulier genereren"
-        subheader="Genereer een formulier voor een persoon"
+        subheader="Genereer een formulier voor geselecteerde personen en activiteit"
         icon="folders-fill"
       >
         <div className="*:text-red-500">
           {persons?.length === 0 && <p>Voeg eerst een persoon toe om het formulier te genereren</p>}
           {events?.length === 0 && <p>Voeg eerst de gegevens van een activiteit toe om het formulier te genereren</p>}
-          {!selectedGroupData && <p>Wacht tot de gegevens van de geselecteerde groep ingeladen zijn</p>}
         </div>
-        <GenerateForm onSubmit={handleGenerateByForm} />
+        {(events?.length > 0 && events?.length > 0) && <GenerateForm onSubmit={handleGenerateByForm} />}
       </Section>
       <p className="mt-12">{`(Opmerking voor (groeps)leiding: Gegevens worden rechtstreeks uit de Groepsadministratie overgenomen. Zie "groepsinstellingen".)`}</p>
     </>

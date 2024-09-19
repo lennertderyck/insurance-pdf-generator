@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePersistentPersonsStore } from '../../../state/stores/usePersistentPersonsStore';
 import { Person } from '../../../types/identities';
+import Section from '../../elements/Section/Section';
 import PersonForm from '../../forms/PersonForm/PersonForm';
 
 interface Props {};
@@ -16,10 +17,14 @@ const RegisterPersonPage: FC<Props> = () => {
   }
   
   return (
-    <>
-      <h3>Nieuwe persoon</h3>
+    <Section 
+      icon="shining-fill"
+      title="Nieuwe persoon"
+      subheader="Vul de gegevens in van de nieuwe persoon."
+      divider={false}
+    >
       <PersonForm onSubmit={registerPerson} />
-    </>
+    </Section>
   )
 }
 
