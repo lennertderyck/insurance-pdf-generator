@@ -11,12 +11,14 @@ interface Props {
 const Capsule: FC<Props> = ({ Prefix, Title, Subheader, Suffix}) => {
   return (
     <div className={styles.container}>
-      <div className={styles.prefix}>
-        {Prefix}
-      </div>
-      <div>
-        <h5 className={styles.title}>{Title}</h5>
-        <h6 className={styles.subheader}>{Subheader}</h6>
+      <div className={styles.main}>
+        <div className={styles.prefix}>
+          {Prefix}
+        </div>
+        <div>
+          <h5 className={styles.title}>{Title}</h5>
+          <h6 className={styles.subheader}>{Subheader}</h6>
+        </div>
       </div>
       <div className={styles.suffix}>
         {Suffix}

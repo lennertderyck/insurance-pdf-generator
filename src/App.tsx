@@ -5,9 +5,7 @@ import RootNavigation from './components/navigation/RootNavigation';
 interface Props {};
 
 const App: FC<Props> = () => {  
-  return (
-    <RouterProvider router={RootNavigation} />
-  )
+  return (<RouterProvider router={RootNavigation} />)
 }
 
 export default App;

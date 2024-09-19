@@ -6,27 +6,21 @@ import Icon from '../../basics/Icon/Icon';
 
 interface Props {
   person: Person;
-  onDelete?: () => void;
 };
 
-const PersonCard: FC<Props> = ({ person, onDelete }) => {
+const GenerateCard: FC<Props> = ({ person }) => {
   const groupInfo = groups?.[person?.group as keyof typeof groups];
+  
   const subheaderParts = [groupInfo?.name, person?.nrn];
   
   return (
     <Capsule 
-      Prefix={<Icon name="shining-line" />}
+      Prefix={<Icon name="folders-line" />}
       Title={`${person.name} ${person.lastName}`}
       Subheader={subheaderParts.join(' · ')} 
-      Suffix={
-        onDelete ?
-          <button onClick={onDelete}>
-            <Icon name="delete-bin-2-line" />
-          </button> :
-          undefined
-      }
+      // description={`${event.period.start} - ${event.period.end}`}
     />
   )
 }
 
-export default PersonCard;
+export default GenerateCard;

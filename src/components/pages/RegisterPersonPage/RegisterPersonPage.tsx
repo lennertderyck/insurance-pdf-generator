@@ -16,10 +16,10 @@ const RegisterPersonPage: FC<Props> = () => {
   }
   
   return (
-    <div className="p-16">
+    <>
       <h3>Nieuwe persoon</h3>
       <PersonForm onSubmit={registerPerson} />
-    </div>
+    </>
   )
 }
 

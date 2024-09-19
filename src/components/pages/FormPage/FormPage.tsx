@@ -1,15 +1,13 @@
-import { generate } from "@pdfme/generator";
-import { barcodes, image, text } from "@pdfme/schemas";
 import { useQuery } from "@tanstack/react-query";
-import dayjs from "dayjs";
-import { FC, useCallback, useState } from 'react';
+import { FC, useState } from 'react';
 import { Link } from "react-router-dom";
 import { usePersistentEventsStore } from "../../../state/stores/usePersistentEventsStore";
 import { usePersistentPersonsStore } from "../../../state/stores/usePersistentPersonsStore";
-import { stamp } from "../../../utils/data/stamp";
-import { cmTemplate } from "../../../utils/data/templates/cm/schema";
+import { Person } from "../../../types/identities";
+import EventCard from "../../elements/EventCard/EventCard";
 import PersonCard from "../../elements/PersonCard/PersonCard";
-import EventForm from "../../forms/EventForm/EventForm";
+import Section from "../../elements/Section/Section";
+import GenerateForm from "../../forms/GenerateForm/GenerateForm";
 
 
 interface Props {};
@@ -19,7 +17,7 @@ const FormPage: FC<Props> = () => {
   const deletePerson = usePersistentPersonsStore(state => state.deletePerson);
   
   const events = usePersistentEventsStore(state => state.events);
-  const addEvent = usePersistentEventsStore(state => state.addEvent);
+  const deleteEvent = usePersistentEventsStore(state => state.deleteEvent);
   
   const [event, setEvent] = useState<any | null>(events[0]);
   const [broker, setBroker] = useState<string>('cm');
@@ -32,101 +30,78 @@ const FormPage: FC<Props> = () => {
       return await response.json();
     }
   })
-  
-  const address = `${selectedGroupData?.adressen?.[0]?.straat} ${selectedGroupData?.adressen?.[0]?.nummer}, ${selectedGroupData?.adressen?.[0]?.postcode} ${selectedGroupData?.adressen?.[0]?.gemeente}`
     
-  const generatePdf = useCallback(async (person: any, event: any, group: any) => {
-    const day = dayjs();
-    const periodStart = dayjs(event?.period?.start);
-    const periodEnd = dayjs(event?.period?.end);
-    const plugins = { text, image, qrcode: barcodes.qrcode };
-    const inputs = [
-      {
-        "groupName": selectedGroupData?.naam,
-        "address": address,
-        "email": selectedGroupData?.email,
-        "lastName": person.lastName,
-        "firstName": person.name,
-        "street": person.address.street,
-        "number": person.address.number,
-        "postalcode": person.address.postalcode,
-        "city": person.address.city,
-        "country": "België",
-        "stamp": stamp,
-        "registredOrganisation": "Scouts en Gidsen Vlaanderen",
-        "period": `${periodStart.format('DD/MM/YYYY')} - ${periodEnd.format('DD/MM/YYYY')}`,
-        "paymentDate": dayjs(event.payment.date).format('DD/MM/YYYY'),
-        "paymentAmount": `${event.payment.amount} €`,
-        "dateDay": day.format('DD'),
-        "dateMonth": day.format('MM'),
-        "dateYear": day.format('YYYY'),
-        "nrn": person.nrn,
-      }
-    ];
-    
-    const pdf = await generate({ template: cmTemplate as any, plugins, inputs });
-    const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
-    window.open(URL.createObjectURL(blob));
-  }, [address, selectedGroupData])
-  
-  const handleDeletePerson = (person: any) => {
+  const handleDeletePerson = (person: Person) => {
     const confirmed = window.confirm(`Ben je zeker dat je deze ${person.name} ${person.lastName} (${person.nrn}) wilt verwijderen?`);
     if (confirmed) {
       deletePerson(person.nrn);
     }
   }
   
+  const handleDeleteEvent = (index: number) => {
+    const confirmed = window.confirm(`Ben je zeker dat je deze activiteit wilt verwijderen?`);
+    if (confirmed) {
+      deleteEvent(index);
+    }
+  }
+  
+  const handleGenerateByForm = (data: any) => {
+    const persons = Object.keys(data.persons).filter((key) => data.persons[key]);
+    persons.forEach(async (nrn: string) => {
+      window.open(`/generate?person=${nrn}&event=${data.event}`);
+    })
+  }
+  
   return (
-    <div className="p-16">
-      <div className="flex flex-row gap-4 flex-wrap">
-        { persons?.map((person) => (
-          <PersonCard person={person} />
-        ))}
-      </div>
-      <Link to="/persons/register" className="button mt-4">Voeg een persoon toe</Link>
-      <hr />
-      <h3>Nieuwe activiteit</h3>
-      <EventForm onSubmit={(data) => {
-        addEvent(data);
-        setEvent(data);
-      }} />
-      <hr />
-      <h3>Genereer formulier</h3>
-      <div className="*:text-red-500 mb-8">
-        {persons?.length === 0 && <p>Voeg eerst een persoon toe om het formulier te genereren</p>}
-        {events?.length === 0 && <p>Voeg eerst de gegevens van een activiteit toe om het formulier te genereren</p>}
-        {!selectedGroupData && <p>Wacht tot de gegevens van de geselecteerde groep ingeladen zijn</p>}
-      </div>
-      <div>
-        <label>Ziekenfonds: </label>
-        <select value={broker} onChange={event => setBroker(event.target.value)}>
-          <option value="cm">CM</option>
-        </select>
-      </div>
-      <div>
-        <label>Groep: </label>
-        <select value={group} onChange={event => setGroup(event.target.value)}>
-          <option value="O1306G">Haegepoorters</option>
-          <option value="O1307G">HDB - Hubert De Bruyker</option>
-          <option value="O1304G">Sint-Bernadette</option>
-        </select>
-      </div>
-      <div>
-        <label>Activiteit: </label>
-        <select className="mb-4" onChange={event => setEvent(events[parseInt(event.target.value)])}>
-          <option disabled>Selecteer een activiteit</option>
-          {events?.map((event, index) => (
-            <option value={index} key={index}>{event.name} van {dayjs(event?.period?.start).format('DD/MM/YYYY')} - {dayjs(event?.period?.end).format('DD/MM/YYYY')}</option>
-          ))}
-        </select>
-      </div>
-      <ul>
-        { persons?.map((person, index) => (
-          <li key={index}>{ person.name } {person.lastName}: {<button disabled={!event} onClick={() => generatePdf(person, event, selectedGroupData)}>Genereer formulier</button>} | <button onClick={() => handleDeletePerson(person)}>Verwijder {person.name}</button></li>
-        ))}
-      </ul>
+    <>
+      <Section
+        icon="shining-fill"
+        title="Geregistreerde personen"
+        subheader="Voor deze personen kan je een formulier genereren"
+        Suffix={<Link to="/persons/register" className="button mt-4">Voeg iemand toe</Link>}
+      >
+        {persons?.length === 0 && <p>Nog niemand toegevoegd</p>}
+        {persons?.length > 0 && (
+          <div className="flex flex-col divide-y border border-gray-200 w-full rounded-xl">
+            { persons?.map((person) => (
+              <div key={person.nrn} className="px-4 py-3">
+                <PersonCard person={person} onDelete={() => handleDeletePerson(person)} />
+              </div>
+            ))}
+          </div>
+        )}
+      </Section>
+      <Section 
+        title="Activiteiten"
+        subheader="Activiteiten waarvoor je een formulier kan genereren"
+        icon="home-smile-2-fill"
+        Suffix={<Link to="/events/register" className="button mt-4">Voeg een activiteit toe</Link>}
+      >
+        {events?.length === 0 && <p>Nog geen activiteiten toegevoegd</p>}
+        {events?.length > 0 && (
+          <div className="flex flex-col divide-y border border-gray-200 w-full rounded-xl">
+            {events?.map((event, index) => (
+              <div key={index} className="px-4 py-3">
+                <EventCard key={index} event={event} onDelete={() => handleDeleteEvent(index)} />
+              </div>
+            ))}
+          </div>
+        )}
+      </Section>
+      <Section
+        title="Formulier genereren"
+        subheader="Genereer een formulier voor een persoon"
+        icon="folders-fill"
+      >
+        <div className="*:text-red-500">
+          {persons?.length === 0 && <p>Voeg eerst een persoon toe om het formulier te genereren</p>}
+          {events?.length === 0 && <p>Voeg eerst de gegevens van een activiteit toe om het formulier te genereren</p>}
+          {!selectedGroupData && <p>Wacht tot de gegevens van de geselecteerde groep ingeladen zijn</p>}
+        </div>
+        <GenerateForm onSubmit={handleGenerateByForm} />
+      </Section>
       <p className="mt-12">{`(Opmerking voor (groeps)leiding: Gegevens worden rechtstreeks uit de Groepsadministratie overgenomen. Zie "groepsinstellingen".)`}</p>
-    </div>
+    </>
   )
 }
 
