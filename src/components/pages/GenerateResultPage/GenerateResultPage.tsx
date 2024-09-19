@@ -78,9 +78,18 @@ const GenerateResultPage: FC<Props> = () => {
   
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      <h3>Er ging iets fout bij het genereren van het formulier</h3>
-      <p>Ga terug en probeer het opnieuw</p>
-      <Link to="/" className="button mt-4">Startpagina</Link>
+      {!person && !event ? (
+        <>
+          <h3>Er ging iets fout bij het genereren van het formulier</h3>
+          <p>Ga terug en probeer het opnieuw</p>
+          <Link to="/" className="button mt-4">Startpagina</Link>
+        </>
+      ) : (
+        <>
+          <h3>Het formulier wordt aangemaakt...</h3>
+          <p>Verlaat deze pagina niet zolang het niet geopend of gedownload is</p>
+        </>
+      )}
     </div>
   )
 }
