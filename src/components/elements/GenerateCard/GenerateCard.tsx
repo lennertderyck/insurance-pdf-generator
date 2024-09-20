@@ -15,7 +15,7 @@ const GenerateCard: FC<Props> = ({ person }) => {
   
   return (
     <Capsule 
-      Prefix={<Icon name="folders-line" />}
+      Prefix={<Icon name="file-pdf-2-line" />}
       Title={`${person.name} ${person.lastName}`}
       Subheader={subheaderParts.join(' · ')} 
       // description={`${event.period.start} - ${event.period.end}`}

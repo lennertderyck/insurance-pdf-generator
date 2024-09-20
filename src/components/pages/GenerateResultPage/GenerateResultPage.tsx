@@ -60,7 +60,8 @@ const GenerateResultPage: FC<Props> = () => {
         }
       ];
       
-      const pdf = await generate({ template: cmTemplate as any, plugins, inputs });
+      const broker = 'CM'
+      const pdf = await generate({ template: cmTemplate as any, plugins, inputs, options: { title: `${broker} Formulier voor ${event.name} - ${person.name} ${person.lastName}`} });
       const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
       return blob;
     }
@@ -70,7 +71,7 @@ const GenerateResultPage: FC<Props> = () => {
     if (person && event && selectedGroupData) {
       generatePdf().then((blob) => {
         if (blob) {
-          window.location.href = URL.createObjectURL(blob);
+          window.location.replace(URL.createObjectURL(blob));
         }
       });
     }

@@ -88,7 +88,7 @@ const FormPage: FC<Props> = () => {
       <Section
         title="Formulier genereren"
         subheader="Genereer een formulier voor geselecteerde personen en activiteit"
-        icon="folders-fill"
+        icon="file-pdf-2-fill"
       >
         <div className="*:text-red-500">
           {persons?.length === 0 && <p>Voeg eerst een persoon toe om het formulier te genereren</p>}
