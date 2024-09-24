@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { FC } from 'react';
 import { Event } from '../../../types/identities';
 import Capsule from '../../basics/Capsule/Capsule';
@@ -9,11 +10,14 @@ interface Props {
 };
 
 const EventCard: FC<Props> = ({ event, onDelete }) => {
+  const eventStart = dayjs(event.period.start).format('DD MMMM YYYY');
+  const eventEnd = dayjs(event.period.end).format('DD MMMM YYYY');
+  
   return (
     <Capsule 
       Prefix={<Icon name="home-smile-2-line" />}
       Title={event.name} 
-      Subheader={`€${event.payment.amount}`} 
+      Subheader={`${eventStart} tot ${eventEnd}`} 
       Suffix={
         onDelete ? 
           <button onClick={onDelete}>
