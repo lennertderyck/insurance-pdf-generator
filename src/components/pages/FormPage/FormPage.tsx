@@ -39,8 +39,8 @@ const FormPage: FC<Props> = () => {
   const handleGenerateByForm = (data: any) => {
     const autoExport = true || data.export;
     const persons = Object.keys(data.persons).filter((key) => data.persons[key]);
-    persons.forEach(async (nrn: string) => {
-      window.open(`/generate?person=${nrn}&event=${data.event}&broker=${data.broker}&auto=${autoExport}`);
+    persons.forEach(async (id: string) => {
+      window.open(`/generate?person=${id}&event=${data.event}&broker=${data.broker}&auto=${autoExport}`);
     })
   }
   

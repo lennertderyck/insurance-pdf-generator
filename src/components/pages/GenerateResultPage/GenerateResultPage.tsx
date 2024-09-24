@@ -3,6 +3,7 @@ import { FC, useCallback, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { usePersistentEventsStore } from '../../../state/stores/usePersistentEventsStore';
 import { usePersistentPersonsStore } from '../../../state/stores/usePersistentPersonsStore';
+import { Person } from '../../../types/identities';
 import { brokers } from '../../../utils/data/brokers';
 import { groups } from '../../../utils/data/groups';
 import { Generator } from '../../../utils/funcs/generate';
@@ -17,7 +18,7 @@ const GenerateResultPage: FC<Props> = () => {
   const autoGenerateParam = searchParams.get('auto');
     
   const broker = brokers[brokerParam as keyof typeof brokers];
-  const person = usePersistentPersonsStore(state => state.persons.find((person: any) => person.nrn === personParam));
+  const person = usePersistentPersonsStore(state => state.persons.find((person: Person) => person.id === personParam));
   const event = usePersistentEventsStore(state => state.events[eventParam]);
     
   const { data: selectedGroupData } = useQuery({

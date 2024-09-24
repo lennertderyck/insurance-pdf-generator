@@ -16,7 +16,7 @@ const PersonSelect = () => {
     <div className="flex flex-col divide-y border border-gray-200 w-full rounded-xl">
       { persons?.map((person, index) => (
         <div key={person.nrn} className="px-4 py-3 flex flex-row">
-          <input type="checkbox" defaultChecked className="mr-5" {...register(`persons.${person.nrn}`)} />
+          <input type="checkbox" defaultChecked className="mr-5" {...register(`persons.${person.id}`)} />
           <GenerateCard person={person} />
         </div>
       ))}

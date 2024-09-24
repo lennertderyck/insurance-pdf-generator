@@ -3,12 +3,36 @@ import { pdf } from "./pdf";
 export const cmTemplate = (groupStamp: string) => ({
   "schemas": [
     {
-      "personNameFull": {
+      "personLastName": {
         "type": "text",
-        "content": "personNameFull",
+        "content": "personLastName",
         "position": {
           "x": 34.13,
           "y": 55.77
+        },
+        "width": 78.34,
+        "height": 5.76,
+        "rotate": 0,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "fontSize": 13,
+        "lineHeight": 1,
+        "characterSpacing": 0,
+        "fontColor": "#000000",
+        "backgroundColor": "",
+        "opacity": 1,
+        "strikethrough": false,
+        "underline": false,
+        "required": false,
+        "readOnly": false,
+        "fontName": "Roboto"
+      },
+      "personFirstName": {
+        "type": "text",
+        "content": "personFirstName",
+        "position": {
+          "x": 124.3,
+          "y": 56.77
         },
         "width": 78.34,
         "height": 5.76,
