@@ -14,7 +14,7 @@ export interface SvgProps {
 
 export type AvailableIcons = keyof typeof remixGlyph;
 
-export interface IconProps<UsesLegacy extends Boolean = false> extends SvgProps {
+export interface IconProps extends SvgProps {
   color?: string;
   className?: string;
   name: AvailableIcons;

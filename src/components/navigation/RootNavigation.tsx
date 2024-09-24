@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
+import EditPersonPage from '../pages/EditPersonPage/EditPersonPage';
 import FormPage from '../pages/FormPage/FormPage';
 import GenerateResultPage from '../pages/GenerateResultPage/GenerateResultPage';
 import RegisterEventPage from '../pages/RegisterEventPage/RegisterEventPage';
@@ -15,6 +16,7 @@ const RootNavigation = createBrowserRouter([
         path: 'persons',
         children: [
           { path: 'register', element: <RegisterPersonPage /> },
+          { path: ':id/edit', element: <EditPersonPage /> },
         ]
       },
       {

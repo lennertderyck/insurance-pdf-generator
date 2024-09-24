@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { usePersistentEventsStore } from "../../../state/stores/usePersistentEventsStore";
 import { usePersistentPersonsStore } from "../../../state/stores/usePersistentPersonsStore";
 import { Person } from "../../../types/identities";
@@ -13,12 +13,15 @@ import GenerateForm from "../../forms/GenerateForm/GenerateForm";
 interface Props {};
 
 const FormPage: FC<Props> = () => {
+  const navigate = useNavigate();
+  
   const persons = usePersistentPersonsStore(state => state.persons);
   const deletePerson = usePersistentPersonsStore(state => state.deletePerson);
   
   const events = usePersistentEventsStore(state => state.events);
   const deleteEvent = usePersistentEventsStore(state => state.deleteEvent);
     
+  const handleEditPerson = (person: Person) => navigate(`/persons/${person.id}/edit`);
   const handleDeletePerson = (person: Person) => {
     const confirmed = window.confirm(`Ben je zeker dat je deze ${person.name} ${person.lastName} (${person.nrn}) wilt verwijderen?`);
     if (confirmed) {
@@ -26,17 +29,18 @@ const FormPage: FC<Props> = () => {
     }
   }
   
-  const handleDeleteEvent = (index: number) => {
+  const handleDeleteEvent = (id: string) => {
     const confirmed = window.confirm(`Ben je zeker dat je deze activiteit wilt verwijderen?`);
     if (confirmed) {
-      deleteEvent(index);
+      deleteEvent(id);
     }
   }
   
   const handleGenerateByForm = (data: any) => {
+    const autoExport = true || data.export;
     const persons = Object.keys(data.persons).filter((key) => data.persons[key]);
     persons.forEach(async (nrn: string) => {
-      window.open(`/generate?person=${nrn}&event=${data.event}`);
+      window.open(`/generate?person=${nrn}&event=${data.event}&broker=${data.broker}&auto=${autoExport}`);
     })
   }
   
@@ -62,7 +66,7 @@ const FormPage: FC<Props> = () => {
           <div className="flex flex-col divide-y border border-gray-200 w-full rounded-xl">
             { persons?.map((person) => (
               <div key={person.nrn} className="px-4 py-3">
-                <PersonCard person={person} onDelete={() => handleDeletePerson(person)} />
+                <PersonCard person={person} onEdit={() => handleEditPerson(person)} onDelete={() => handleDeletePerson(person)} />
               </div>
             ))}
           </div>
@@ -79,7 +83,7 @@ const FormPage: FC<Props> = () => {
           <div className="flex flex-col divide-y border border-gray-200 w-full rounded-xl">
             {events?.map((event, index) => (
               <div key={index} className="px-4 py-3">
-                <EventCard key={index} event={event} onDelete={() => handleDeleteEvent(index)} />
+                <EventCard key={index} event={event} onDelete={() => handleDeleteEvent(event.id)} />
               </div>
             ))}
           </div>

@@ -6,10 +6,11 @@ import Icon from '../../basics/Icon/Icon';
 
 interface Props {
   person: Person;
+  onEdit?: () => void;
   onDelete?: () => void;
 };
 
-const PersonCard: FC<Props> = ({ person, onDelete }) => {
+const PersonCard: FC<Props> = ({ person, onEdit, onDelete }) => {
   const groupInfo = groups?.[person?.group as keyof typeof groups];
   const subheaderParts = [groupInfo?.name, person?.nrn];
   
@@ -19,11 +20,20 @@ const PersonCard: FC<Props> = ({ person, onDelete }) => {
       Title={`${person.name} ${person.lastName}`}
       Subheader={subheaderParts.join(' · ')} 
       Suffix={
-        onDelete ?
-          <button onClick={onDelete}>
-            <Icon name="delete-bin-2-line" />
-          </button> :
-          undefined
+        <div className="flex flex-row gap-4">
+          {onEdit ?
+            <button onClick={onEdit}>
+              <Icon name="edit-2-line" />
+            </button> :
+            undefined
+          }
+          {onDelete ?
+            <button onClick={onDelete}>
+              <Icon name="delete-bin-2-line" />
+            </button> :
+            undefined
+          }
+        </div>
       }
     />
   )

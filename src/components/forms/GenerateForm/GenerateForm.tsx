@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { usePersistentEventsStore } from '../../../state/stores/usePersistentEventsStore';
 import { usePersistentPersonsStore } from '../../../state/stores/usePersistentPersonsStore';
+import { brokers } from '../../../utils/data/brokers';
 import Form from '../../elements/Form/Form';
 import SelectInput from '../../elements/Form/controls/SelectInput/SelectInput';
 import GenerateCard from '../../elements/GenerateCard/GenerateCard';
@@ -34,13 +35,16 @@ const GenerateForm: FC<Props> = ({ onSubmit }) => {
     <Form onSubmit={onSubmit}>
       <div className="flex flex-row gap-4 mb-4">
         <SelectInput label="Ziekenfonds" name="broker">
-          <option value="cm">CM</option>
+          {Object.entries(brokers).map(([key, brokerInfo]) => (
+            <option key={key} value={key}>{brokerInfo.name}</option>
+          ))}
         </SelectInput>
         <SelectInput label="Activiteit" name="event">
           {events?.map((event, index) => (
             <option value={index} key={index}>{event.name} van {dayjs(event?.period?.start).format('DD/MM/YYYY')} - {dayjs(event?.period?.end).format('DD/MM/YYYY')}</option>
           ))}
         </SelectInput>
+        {/* <Input name="export" label="Automatisch downloaden" type="checkbox" defaultChecked /> */}
       </div>
       <PersonSelect />
       <button type="submit" className="mt-4">Genereer formulieren</button>

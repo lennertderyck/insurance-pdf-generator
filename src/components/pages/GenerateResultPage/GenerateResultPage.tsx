@@ -1,13 +1,11 @@
-import { generate } from '@pdfme/generator';
-import { barcodes, image, text } from '@pdfme/schemas';
 import { useQuery } from '@tanstack/react-query';
-import dayjs from 'dayjs';
 import { FC, useCallback, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { usePersistentEventsStore } from '../../../state/stores/usePersistentEventsStore';
 import { usePersistentPersonsStore } from '../../../state/stores/usePersistentPersonsStore';
-import { stamp } from '../../../utils/data/stamp';
-import { cmTemplate } from '../../../utils/data/templates/cm/template';
+import { brokers } from '../../../utils/data/brokers';
+import { groups } from '../../../utils/data/groups';
+import { Generator } from '../../../utils/funcs/generate';
 
 interface Props {};
 
@@ -15,10 +13,13 @@ const GenerateResultPage: FC<Props> = () => {
   const [searchParams] = useSearchParams();
   const personParam = searchParams.get('person');
   const eventParam = Number(searchParams.get('event'));
+  const brokerParam = searchParams.get('broker');
+  const autoGenerateParam = searchParams.get('auto');
     
+  const broker = brokers[brokerParam as keyof typeof brokers];
   const person = usePersistentPersonsStore(state => state.persons.find((person: any) => person.nrn === personParam));
   const event = usePersistentEventsStore(state => state.events[eventParam]);
-  
+    
   const { data: selectedGroupData } = useQuery({
     queryKey: ['group', person?.group],
     enabled: !!person,
@@ -27,59 +28,39 @@ const GenerateResultPage: FC<Props> = () => {
       return await response.json();
     }
   })
-  
-  const address = `${selectedGroupData?.adressen?.[0]?.straat} ${selectedGroupData?.adressen?.[0]?.nummer}, ${selectedGroupData?.adressen?.[0]?.postcode} ${selectedGroupData?.adressen?.[0]?.gemeente}`;
-  
+    
   const generatePdf = useCallback(async () => {
-    if (person && event) {
-      const day = dayjs();
-      const periodStart = dayjs(event?.period?.start);
-      const periodEnd = dayjs(event?.period?.end);
-      const plugins = { text, image, qrcode: barcodes.qrcode };
-      const inputs = [
-        {
-          "groupName": selectedGroupData?.naam,
-          "address": address,
-          "email": selectedGroupData?.email,
-          "lastName": person.lastName,
-          "firstName": person.name,
-          "street": person.address.street,
-          "number": person.address.number,
-          "postalcode": person.address.postalcode,
-          "city": person.address.city,
-          "country": "België",
-          "stamp": stamp,
-          "registredOrganisation": "Scouts en Gidsen Vlaanderen",
-          "period": `${periodStart.format('DD/MM/YYYY')} - ${periodEnd.format('DD/MM/YYYY')}`,
-          "paymentDate": dayjs(event.payment.date).format('DD/MM/YYYY'),
-          "paymentAmount": `${event.payment.amount} €`,
-          "dateDay": day.format('DD'),
-          "dateMonth": day.format('MM'),
-          "dateYear": day.format('YYYY'),
-          "nrn": person.nrn,
-        }
-      ];
-      
-      const broker = 'CM'
-      const pdf = await generate({ template: cmTemplate as any, plugins, inputs, options: { title: `${broker} Formulier voor ${event.name} - ${person.name} ${person.lastName}`} });
-      const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
-      return blob;
+    if (person && event && broker && selectedGroupData) {
+      const groupStamp = groups['O1306G'].stamp;
+      return Generator.generateBlob({ person, event, group: selectedGroupData }, broker.template(groupStamp));
     }
-  }, [person, selectedGroupData, event])
+  }, [person, selectedGroupData, event, broker])
   
   const generateAndDownload = useCallback(async () => {
-    if (person && event && selectedGroupData) {
+    if (person && event && broker && selectedGroupData) {
       generatePdf().then((blob) => {
         if (blob) {
           window.location.replace(URL.createObjectURL(blob));
         }
       });
     }
-  }, [person, event, selectedGroupData, generatePdf])
-  
+  }, [person, event, broker, selectedGroupData, generatePdf])
+    
   useEffect(() => {
-    generateAndDownload()
-  }, [generateAndDownload])
+    if (autoGenerateParam === 'true') { 
+      generateAndDownload();
+    }
+  }, [generateAndDownload, autoGenerateParam]);
+  
+  const generateAndShare = useCallback(async () => {
+    generatePdf().then((blob) => {
+     if (blob) {
+        navigator.share({
+          files: [new File([blob], `Formulier voor ${event.name} - ${person?.name} ${person?.lastName}.pdf`, { type: 'application/pdf' })],
+        }).catch(console.log);
+     }
+    });
+  }, [event.name, generatePdf, person?.name, person?.lastName]);
   
   return (
     <div className="flex flex-col items-center justify-center h-full">
@@ -91,9 +72,14 @@ const GenerateResultPage: FC<Props> = () => {
         </>
       ) : (
         <>
-          <h3>Het formulier wordt aangemaakt...</h3>
-          <p>Verlaat deze pagina niet zolang het niet geopend of gedownload is</p>
-          <button onClick={generateAndDownload}>Opnieuw genereren</button>
+          <h3>Formulier genereren en delen</h3>
+          <p>Verstuur het aangemaakte formulier</p>
+          <div className="mt-4">
+            { autoGenerateParam === 'true' ? 
+              <button onClick={generateAndDownload}>Opnieuw genereren</button>:
+              <button onClick={generateAndShare}>Delen</button>
+            }
+          </div>
         </>
       )}
     </div>
