@@ -41,7 +41,7 @@ const GenerateForm: FC<Props> = ({ onSubmit }) => {
         </SelectInput>
         <SelectInput label="Activiteit" name="event">
           {events?.map((event, index) => (
-            <option value={index} key={index}>{event.name} van {dayjs(event?.period?.start).format('DD/MM/YYYY')} - {dayjs(event?.period?.end).format('DD/MM/YYYY')}</option>
+            <option value={event.id} key={index}>{event.name} van {dayjs(event?.period?.start).format('DD/MM/YYYY')} - {dayjs(event?.period?.end).format('DD/MM/YYYY')}</option>
           ))}
         </SelectInput>
         {/* <Input name="export" label="Automatisch downloaden" type="checkbox" defaultChecked /> */}

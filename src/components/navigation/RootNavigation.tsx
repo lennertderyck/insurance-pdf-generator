@@ -28,7 +28,10 @@ const RootNavigation = createBrowserRouter([
       {
         path: 'generate',
         element: <GenerateResultPage />
-      }
+      },
+      { path: 'general', element: <>General</> }, // nav template
+      { path: 'onboarding', element: <>Onboarding</> }, // template around modal
+      { path: 'intro', element: <>Intro</> }, // template around modal
     ]
   },
 ]);

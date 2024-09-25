@@ -1,19 +1,27 @@
-import { generate } from "@pdfme/generator";
-import { barcodes, image, text } from "@pdfme/schemas";
+import axios from "axios";
 import dayjs from "dayjs";
+import { usePersistentEventsStore } from "../../state/stores/usePersistentEventsStore";
+import { usePersistentPersonsStore } from "../../state/stores/usePersistentPersonsStore";
 import { Event, Group, Person } from "../../types/identities";
+import { brokers } from "../data/brokers";
 import { groups } from "../data/groups";
-
-const plugins = { text, image, qrcode: barcodes.qrcode };
+import { Pdfme } from "../vendors/Pdfme/Generator";
 
 interface FormGeneratorInput {
   person: Person;
   event: Event;
   group: Group;
+  stamp: string;
+}
+
+const getGroupInfoEndpoint = (group: string) => {
+  const corsProxy = 'https://corsproxy.io/';
+  const gaEndpoint = `https://groepsadmin.scoutsengidsenvlaanderen.be/groepsadmin/rest-ga/groep`;
+  return `${corsProxy}?${gaEndpoint}/${group}`;
 }
 
 export const Generator = {
-  inputToFields: (input: FormGeneratorInput) => {
+  generateFieldValues: (input: FormGeneratorInput) => {
     const groupAddress = input.group.adressen[0];
     const eventStartDate = dayjs(input.event.period.start);
     const eventEndDate = dayjs(input.event.period.end);
@@ -25,7 +33,7 @@ export const Generator = {
       
       registredOrganisation: 'Scouts en Gidsen Vlaanderen',
 
-      groupStamp: groups['O1306G'].stamp,
+      groupStamp: input.stamp,
       groupName: input.group.naam,
       groupEmail: input.group.email,
       groupAddressFull: `${groupAddress.straat} ${groupAddress.nummer}, ${groupAddress.postcode} ${groupAddress.gemeente}`,
@@ -61,9 +69,23 @@ export const Generator = {
     }
   },
   generateBlob: async (formInput: FormGeneratorInput, template: any) => {
-    const inputs = Generator.inputToFields(formInput);
-    console.log(inputs);
-    const pdf = await generate({ template, plugins, inputs: [inputs] });
+    const inputs = Generator.generateFieldValues(formInput);
+    const pdf = await Pdfme.generate(template, inputs);
     return new Blob([pdf.buffer], { type: 'application/pdf' });
-  }
+  },
+  generateForm: async (config: { personId: string, eventId: string, brokerId: string }) => {
+    const person = usePersistentPersonsStore.getState().persons.find((person: Person) => person.id === config.personId);
+    const event = usePersistentEventsStore.getState().events.find((event: Event) => event.id === config.eventId);
+    const broker = brokers[config.brokerId as keyof typeof brokers];
+    
+    console.log({person, event, broker});
+    
+    if (person && event && broker) {
+      const group = (await axios<Group>(getGroupInfoEndpoint(person.group))).data;
+      const groupStamp = groups[person.group as keyof typeof groups].stamp;
+      return Generator.generateBlob({ person, event, group, stamp: groupStamp }, broker.template(groupStamp));
+    } else {
+      throw new Error('Person, event or broker not found');
+    }
+  },
 }

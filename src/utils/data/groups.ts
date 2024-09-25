@@ -1,3 +1,4 @@
+import { hdbStamp } from "./stamps/hdb";
 import { hpStamp } from "./stamps/hp";
 
 export const groups = {
@@ -5,9 +6,10 @@ export const groups = {
     name: 'Haegepoorters',
     stamp: hpStamp,
   },
-  // 'O1307G': {
-  //   name: 'HDB - Hubert De Bruyker',
-  // },
+  'O1307G': {
+    name: 'HDB - Hubert De Bruyker',
+    stamp: hdbStamp,
+  },
   // 'O1304G': {
   //   name: 'Sint-Bernadette',
   // },
