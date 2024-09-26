@@ -13,6 +13,7 @@ const RootNavigation = createBrowserRouter([
     element: <RootPage />,
     children: [
       { index: true, element: <FormPage /> },
+      { path: ':groupId', element: <FormPage /> },
       {
         path: 'persons',
         children: [

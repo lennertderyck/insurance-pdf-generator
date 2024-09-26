@@ -1,6 +1,8 @@
 import { FC, useRef } from 'react';
+import { getAvailableGroupsFromPersons } from '../../../utils/funcs/groups';
 import Form from '../../elements/Form/Form';
 import Input from '../../elements/Form/controls/Input/Input';
+import SelectInput from '../../elements/Form/controls/SelectInput/SelectInput';
 
 interface Props {
   onSubmit: (data: any) => void;
@@ -8,6 +10,7 @@ interface Props {
 
 const EventForm: FC<Props> = ({ onSubmit }) => {
   const formRef = useRef<HTMLFormElement>(null);
+  const availableGroups = getAvailableGroupsFromPersons();
   
   return (
     <Form ref={formRef} onSubmit={(data) => {
@@ -25,6 +28,9 @@ const EventForm: FC<Props> = ({ onSubmit }) => {
         <Input label="Startdatum" name="period.start" type="date" />
         <Input label="Einddatum" name="period.end" type="date" />
       </div>
+      <SelectInput label="Groep" name="group" >
+        {availableGroups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
+      </SelectInput>
       <button type="submit" className="mt-4">Activiteit toevoegen</button>
     </Form>
   )

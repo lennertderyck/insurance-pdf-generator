@@ -17,6 +17,7 @@ export type PersonInput = Omit<Person, 'id'>;
 export interface Event {
   id: string;
   name: string;
+  group: string | null;
   payment: {
     amount: number;
     date: string;

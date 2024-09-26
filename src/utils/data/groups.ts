@@ -3,10 +3,12 @@ import { hpStamp } from "./stamps/hp";
 
 export const groups = {
   'O1306G': {
+    id: 'O1306G',
     name: 'Haegepoorters',
     stamp: hpStamp,
   },
   'O1307G': {
+    id: 'O1307G',
     name: 'HDB - Hubert De Bruyker',
     stamp: hdbStamp,
   },

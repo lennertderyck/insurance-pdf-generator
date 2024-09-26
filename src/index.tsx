@@ -1,4 +1,5 @@
 import { QueryClientProvider } from '@tanstack/react-query';
+import { Analytics } from "@vercel/analytics/react";
 import dayjs from 'dayjs';
 import 'dayjs/locale/nl-be';
 import React from 'react';
@@ -16,6 +17,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={QUERY_CLIENT}>
+      <Analytics debug={process.env.NODE_ENV === 'development'} />
       <App />
     </QueryClientProvider>
   </React.StrictMode>
