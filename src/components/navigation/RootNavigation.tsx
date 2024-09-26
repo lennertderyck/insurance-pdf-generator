@@ -3,6 +3,7 @@ import EditPersonPage from '../pages/EditPersonPage/EditPersonPage';
 import FormPage from '../pages/FormPage/FormPage';
 import GenerateResultPage from '../pages/GenerateResultPage/GenerateResultPage';
 import RegisterEventPage from '../pages/RegisterEventPage/RegisterEventPage';
+import RegisterPeristentFormPage from '../pages/RegisterPeristentFormPage/RegisterPeristentFormPage';
 import RegisterPersonPage from '../pages/RegisterPersonPage/RegisterPersonPage';
 import RootPage from '../pages/RootPage/RootPage';
 
@@ -23,6 +24,12 @@ const RootNavigation = createBrowserRouter([
         path: 'events',
         children: [
           { path: 'register', element: <RegisterEventPage /> },
+        ]
+      },
+      {
+        path: 'forms',
+        children: [
+          { path: 'generated/create', element: <RegisterPeristentFormPage /> },
         ]
       },
       {
