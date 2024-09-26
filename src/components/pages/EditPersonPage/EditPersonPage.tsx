@@ -12,7 +12,7 @@ const EditPersonPage: FC<Props> = () => {
   const params = useParams();
   const personId = params.id;
   
-  const personDetails = usePersistentPersonsStore(state => state.persons.find(person => person.nrn === personId));
+  const personDetails = usePersistentPersonsStore(state => state.persons.find(person => person.id === personId));
   const editPerson = usePersistentPersonsStore(state => state.editPerson);
   
   if (!personDetails || !personId) return <>Geen persoon gevonden</>;
