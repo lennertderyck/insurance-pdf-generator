@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { Person, PersonInput } from "../../types/identities";
@@ -9,6 +9,7 @@ interface UsePersistentPersonsStoreInterface {
   addPerson: (person: PersonInput) => void;
   editPerson: (id: string, input: PersonInput) => void;
   deletePerson: (id: string) => void;
+  import: (persons: Person[]) => void;
 }
 
 export const usePersistentPersonsStore = create(
@@ -21,6 +22,7 @@ export const usePersistentPersonsStore = create(
       }),
       editPerson: (id, personInput) => set((state) => ({ persons: state.persons.map(p => p.id === id ? {...p, ...personInput} : p)})),
       deletePerson: (id) => set((state) => ({ persons: state.persons.filter(person => person.id !== id) })),
+      import: (persons) => set({ persons }),
     }),
     {
       name: "personsStore", // unique name

@@ -1,4 +1,4 @@
-import { v4 as uuid4 } from 'uuid';
+import { v4 as uuid4 } from "uuid";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { Event, EventInput } from "../../types/identities";
@@ -7,6 +7,7 @@ interface UsePersistentEventsStoreInterface {
   events: Event[];
   addEvent: (event: EventInput) => void;
   deleteEvent: (id: string) => void;
+  import: (events: Event[]) => void;
 }
 
 export const usePersistentEventsStore = create(
@@ -18,6 +19,7 @@ export const usePersistentEventsStore = create(
         return ({ events: [...state.events, { id, ...event }] })
       }),
       deleteEvent: (id) => set(state => ({ events: state.events.filter(event => event.id !== id) })),
+      import: (events) => set({ events }),
     }),
     {
       name: "eventsStore", // unique name
