@@ -1,13 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { Person } from "../../types/identities";
+import { Person, PersonInput } from "../../types/identities";
+
 
 interface UsePersistentPersonsStoreInterface {
   persons: Person[];
-  addPerson: (person: Person) => void;
+  addPerson: (person: PersonInput) => void;
+  editPerson: (id: string, input: PersonInput) => void;
   deletePerson: (id: string) => void;
-  editPerson: (id: string, personInput: Partial<Person>) => void;
   import: (persons: Person[]) => void;
 }
 

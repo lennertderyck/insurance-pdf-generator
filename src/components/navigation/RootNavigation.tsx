@@ -1,9 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
+import EditPersonPage from '../pages/EditPersonPage/EditPersonPage';
 import ExportPage from '../pages/ExportPage/ExportPage';
 import FormPage from '../pages/FormPage/FormPage';
 import GenerateResultPage from '../pages/GenerateResultPage/GenerateResultPage';
 import ImportPage from '../pages/ImportPage/ImportPage';
 import RegisterEventPage from '../pages/RegisterEventPage/RegisterEventPage';
+import RegisterPeristentFormPage from '../pages/RegisterPeristentFormPage/RegisterPeristentFormPage';
 import RegisterPersonPage from '../pages/RegisterPersonPage/RegisterPersonPage';
 import RootPage from '../pages/RootPage/RootPage';
 
@@ -13,16 +15,24 @@ const RootNavigation = createBrowserRouter([
     element: <RootPage />,
     children: [
       { index: true, element: <FormPage /> },
+      { path: ':groupId', element: <FormPage /> },
       {
         path: 'persons',
         children: [
           { path: 'register', element: <RegisterPersonPage /> },
+          { path: ':id/edit', element: <EditPersonPage /> },
         ]
       },
       {
         path: 'events',
         children: [
           { path: 'register', element: <RegisterEventPage /> },
+        ]
+      },
+      {
+        path: 'forms',
+        children: [
+          { path: 'generated/create', element: <RegisterPeristentFormPage /> },
         ]
       },
       {

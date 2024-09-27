@@ -1,12 +1,14 @@
 import { FC, PropsWithChildren } from 'react';
 import SectionHeader, { SectionHeaderProps } from '../../basics/SectionHeader/SectionHeader';
 
-interface Props extends SectionHeaderProps, PropsWithChildren {};
+interface Props extends SectionHeaderProps, PropsWithChildren {
+  divider?: boolean;
+};
 
-const Section: FC<Props> = ({ title, subheader, Suffix, icon, children }) => {
+const Section: FC<Props> = ({ title, subheader, Suffix, icon, children, divider = true }) => {
   return (
     <section className="w-full">
-      <div className="flex flex-row gap-24">
+      <div className="flex flex-col md:flex-row gap-0 md:gap-24">
         <div className="min-w-[400px]">
           <SectionHeader 
             title={title} 
@@ -19,7 +21,7 @@ const Section: FC<Props> = ({ title, subheader, Suffix, icon, children }) => {
           { children }
         </div>
       </div>
-      <hr />
+      {divider && <hr />}
     </section>
   )
 }

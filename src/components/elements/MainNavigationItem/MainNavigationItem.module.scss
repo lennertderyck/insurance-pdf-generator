@@ -1,6 +1,7 @@
 .base {
-  display: block;
-  @apply bg-transparent rounded-lg p-4;
+  display: flex;
+  flex-direction: row;
+  @apply bg-transparent rounded-lg p-4 gap-4;
 }
 
 .active {
