@@ -52,7 +52,7 @@ const FormPage: FC<Props> = () => {
         </div>
         <div>
           <h4 className="font-semibold mb-1 leading-5">Privacy</h4>
-          <p>Je gegevens worden uitsluitend lokaal opgeslagen en verwerkt. Hierdoor blijven ze volledig in jouw beheer en wordt de veiligheid van je data gegarandeerd.<br/>Je data wordt dus niet met ons of externe partijen gedeeld.</p>
+          <p>Je gegevens worden uitsluitend lokaal opgeslagen en verwerkt. Hierdoor blijven ze volledig in jouw beheer en wordt de veiligheid van je data gegarandeerd. Je data wordt dus niet met ons of externe partijen gedeeld.</p>
         </div>
       </div>
       <Section

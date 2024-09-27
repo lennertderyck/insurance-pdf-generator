@@ -41,7 +41,7 @@ const ExportPage: FC<Props> = () => {
   return (
     <div>
       {canExport ?
-        <button onClick={() => window.open('/import', '_blank')}>Start export</button> :
+        <button onClick={() => window.open(`${targetDomain}/import`, '_blank')}>Start export</button> :
         'Export not possible on this domain'
       }
     </div>
