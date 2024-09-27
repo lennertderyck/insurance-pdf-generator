@@ -12,9 +12,12 @@ const ExportPage: FC<Props> = () => {
   useEffect(() => {
     const broadcastChannel = new BroadcastChannel('refundify');
     broadcastChannel.onmessage = (event) => {
+      console.log('Handshake message received', event);
       if (event.data.type === 'handshake') {
         const needToExport = canExport && event.origin === targetDomain;
+        console.log('Checking if we need to export',);
         if (needToExport) {
+          console.log('Exporting data');
           setStep('exporting')
           broadcastChannel.postMessage({ 
             type: 'export:start',
@@ -26,9 +29,10 @@ const ExportPage: FC<Props> = () => {
             }
           });
           setStep('export_send');
-        }
+        } else console.log('No need to export');
       }
       if (event.data.type === 'import:done') {
+        console.log('Import done', event);
         setStep('export_success');
       }
     };

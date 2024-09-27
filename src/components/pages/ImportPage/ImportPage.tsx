@@ -12,7 +12,9 @@ const ImportPage: FC<Props> = () => {
     const broadcastChannel = new BroadcastChannel('refundify');
     broadcastChannel.postMessage({ type: 'handshake' });
     broadcastChannel.onmessage = (event) => {
+      console.log('Handshake message received', event);
       if (event.data.type === 'export:start') {
+        console.log('Importing data');
         setStep('importing');
         const exportedSources = event.data.data.stores;
         const sources = Object.keys(exportedSources);
@@ -22,6 +24,7 @@ const ImportPage: FC<Props> = () => {
         if (sources.includes('usePersistentEventsStore')) {
           usePersistentEventsStore.getState().import(exportedSources.usePersistentEventsStore);
         }
+        console.log('Import done');
         setStep('import_done');
         broadcastChannel.postMessage({ type: 'import:done' });
       }
