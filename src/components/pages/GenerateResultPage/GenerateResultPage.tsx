@@ -1,6 +1,7 @@
 import { FC, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Generator } from '../../../utils/funcs/generate';
+import Icon from '../../basics/Icon/Icon';
 
 interface Props {};
 
@@ -31,7 +32,7 @@ const GenerateResultPage: FC<Props> = () => {
   }
     
   useEffect(() => {
-    if (autoGenerateParam === 'true') { 
+    if (autoGenerateParam === 'true' && process.env.NODE_ENV !== 'development') { 
       generateAndDownload();
     }
   }, [generateAndDownload, autoGenerateParam]);
@@ -46,7 +47,13 @@ const GenerateResultPage: FC<Props> = () => {
   }
   
   return (
-    <div className="flex flex-col items-center justify-center h-full">
+    <div className="flex flex-col items-center justify-center">
+      { process.env.NODE_ENV === 'development' && (
+        <div className="bg-gray-100 p-4 md:p-6 rounded-xl mb-12 md:mb-16 flex flex-row gap-4">
+          <Icon name="bug-line" />
+          <p>Automatisch genereren is uitgeschakeld in development mode.</p>
+        </div>
+      )}
       {!!!personParam && !!!eventParam ? (
         <>
           <h3>Er ging iets fout bij het genereren van het formulier</h3>

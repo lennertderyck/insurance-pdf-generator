@@ -4,6 +4,7 @@ import ExportPage from '../pages/ExportPage/ExportPage';
 import FormPage from '../pages/FormPage/FormPage';
 import GenerateResultPage from '../pages/GenerateResultPage/GenerateResultPage';
 import ImportPage from '../pages/ImportPage/ImportPage';
+import NerdsOverviewPage from '../pages/NerdsOverviewPage/NerdsOverviewPage';
 import RegisterEventPage from '../pages/RegisterEventPage/RegisterEventPage';
 import RegisterPeristentFormPage from '../pages/RegisterPeristentFormPage/RegisterPeristentFormPage';
 import RegisterPersonPage from '../pages/RegisterPersonPage/RegisterPersonPage';
@@ -39,6 +40,9 @@ const RootNavigation = createBrowserRouter([
         path: 'generate',
         element: <GenerateResultPage />
       },
+      {
+        path: 'nerds', element: <NerdsOverviewPage />
+      }
     ]
   },
   { path: 'general', element: <>General</> }, // nav template
