@@ -22,14 +22,14 @@ jobs:
       - name: Fetch all branches
         run: git fetch --all
 
-      - name: Checkout development 1
-        run: |
-          git checkout development
-          git pull origin development
-
-      - name: Checkout and pull main
+      - name: Checkout main 1
         run: |
           git checkout main
+          git pull --rebase=false origin --prune --verbose
+
+      - name: Checkout development
+        run: |
+          git checkout development
           git pull origin main
 
       - name: Checkout development 2
