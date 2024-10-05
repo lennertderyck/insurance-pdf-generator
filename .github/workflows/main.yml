@@ -1,0 +1,32 @@
+name: Auto Merge Development into Main
+
+# Trigger on push to main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  merge-development:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Git
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.event.pusher.email }}"
+
+      - name: Fetch all branches
+        run: git fetch --all
+
+      - name: Checkout the main branch
+        run: git checkout main
+
+      - name: Merge development into main
+        run: git merge development
+
+      - name: Push changes to main
+        run: git push origin main
