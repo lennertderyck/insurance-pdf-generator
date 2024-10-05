@@ -22,14 +22,21 @@ jobs:
       - name: Fetch all branches
         run: git fetch --all
 
-      - name: Checkout main
-        run: git checkout main
+      - name: Checkout development 1
+        run: git checkout development
 
-      - name: Checkout development
+      - name: Checkout and pull main
+        run: git checkout main
+             git pull origin main
+
+      - name: Checkout development 2
         run: git checkout development
 
       - name: Merge main into development
         run: git merge main
 
-      - name: Push changes to development
+      - name: Commit
+        run: git commit
+
+      - name: Push
         run: git push origin development
