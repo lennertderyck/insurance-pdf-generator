@@ -30,7 +30,7 @@ jobs:
       - name: Checkout development
         run: |
           git checkout development
-          git pull origin main --ff-only
+          git pull origin main --no-ff
 
       - name: Checkout development 2
         run: |
