@@ -38,7 +38,7 @@ jobs:
           git pull origin development
 
       - name: Merge main into development
-        run: git merge main
+        run: git merge main --allow-unrelated-histories
 
       - name: Commit
         run: git commit
