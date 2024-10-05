@@ -26,8 +26,9 @@ jobs:
         run: git checkout development
 
       - name: Checkout and pull main
-        run: git checkout main
-             git pull origin main
+        run: |
+          git checkout main
+          git pull origin main
 
       - name: Checkout development 2
         run: git checkout development
