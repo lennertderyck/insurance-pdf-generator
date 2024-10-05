@@ -30,7 +30,7 @@ jobs:
       - name: Checkout development
         run: |
           git checkout development
-          git pull origin main --no-ff
+          git pull --rebase=false origin --prune --verbose
 
       - name: Checkout development 2
         run: |
