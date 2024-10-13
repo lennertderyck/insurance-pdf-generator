@@ -1,0 +1,13 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+  @apply bg-gray-100;
+}
+
+.outletContainer {
+  max-width: 400px;
+  @apply bg-white shadow-lg rounded-lg p-12;
+  view-timeline-name: outlet;
+}

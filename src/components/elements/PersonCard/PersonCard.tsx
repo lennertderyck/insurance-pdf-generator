@@ -1,21 +1,23 @@
 import { FC } from 'react';
 import { Person } from '../../../types/identities';
 import { groups } from '../../../utils/data/groups';
-import Capsule from '../../basics/Capsule/Capsule';
 import Icon from '../../basics/Icon/Icon';
+import Card from '../Card/Card';
 
 interface Props {
   person: Person;
+  onClick?: () => void;
   onEdit?: () => void;
   onDelete?: () => void;
 };
 
-const PersonCard: FC<Props> = ({ person, onEdit, onDelete }) => {
+const PersonCard: FC<Props> = ({ person, onClick, onEdit, onDelete }) => {
   const groupInfo = groups?.[person?.group as keyof typeof groups];
   const subheaderParts = [groupInfo?.name, person?.nrn];
   
   return (
-    <Capsule 
+    <Card 
+      onClick={onClick}
       Prefix={<Icon name="shining-line" />}
       Title={`${person.name} ${person.lastName}`}
       Subheader={subheaderParts.join(' · ')} 

@@ -1,17 +1,11 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import styles from './Capsule.module.scss';
+import { CapsuleProps } from './Capsule.types';
 
-interface Props {
-  Prefix?: ReactNode;
-  Suffix?: ReactNode;
-  Title?: ReactNode;
-  Subheader?: ReactNode;
-};
-
-const Capsule: FC<Props> = ({ Prefix, Title, Subheader, Suffix}) => {
+const Capsule: FC<CapsuleProps> = ({ Prefix, Title, Subheader, Suffix, onClick}) => {
   return (
     <div className={styles.container}>
-      <div className={styles.main}>
+      <div className={styles.main} onClick={onClick}>
         <div className={styles.prefix}>
           {Prefix}
         </div>

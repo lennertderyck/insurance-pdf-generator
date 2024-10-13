@@ -17,6 +17,7 @@ const RegisterEventPage: FC<Props> = () => {
         title="Nieuwe activiteit"
         subheader="Vul de gegevens in van de nieuwe activiteit."
         divider={false}
+        sectionHeaderStyle={{ viewTransitionName: 'eventsRegister' }}
       >
         <EventForm onSubmit={(data) => {
           addEvent(data);

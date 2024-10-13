@@ -1,0 +1,9 @@
+@value wrapper from "../Card/Card.module.scss"; 
+
+.container {
+  @apply flex flex-col divide-y border border-gray-200 w-full rounded-xl;
+  
+  :global(.wrapper) {
+    @apply rounded-xl;
+  }
+}

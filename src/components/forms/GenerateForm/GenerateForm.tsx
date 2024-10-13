@@ -29,7 +29,8 @@ interface Props {
 };
 
 const GenerateForm: FC<Props> = ({ onSubmit }) => {
-  const events = usePersistentEventsStore(state => state.events);
+  const store = usePersistentEventsStore();
+  const events = store.availableOptions();
 
   return (
     <Form onSubmit={onSubmit}>
@@ -40,6 +41,7 @@ const GenerateForm: FC<Props> = ({ onSubmit }) => {
           ))}
         </SelectInput>
         <SelectInput label="Activiteit" name="event">
+          {events?.length === 0 && <option value="">Geen activiteiten beschikbaar</option>}
           {events?.map((event, index) => (
             <option value={event.id} key={index}>{event.name} van {dayjs(event?.period?.start).format('DD/MM/YYYY')} - {dayjs(event?.period?.end).format('DD/MM/YYYY')}</option>
           ))}
