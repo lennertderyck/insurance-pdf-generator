@@ -6,4 +6,5 @@ export interface CapsuleProps {
   Title?: ReactNode;
   Subheader?: ReactNode;
   onClick?: () => void;
+  alignment?: 'start' | 'center';
 };

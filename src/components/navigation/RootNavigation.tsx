@@ -1,4 +1,5 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
+import App from '../../App';
 import EditPersonPage from '../pages/EditPersonPage/EditPersonPage';
 import EventsOverviewPage from '../pages/EventsOverviewPage/EventsOverviewPage';
 import ExportPage from '../pages/ExportPage/ExportPage';
@@ -17,12 +18,11 @@ import PersonsOverviewPage from '../pages/PersonsOverviewPage/PersonsOverviewPag
 import RegisterEventPage from '../pages/RegisterEventPage/RegisterEventPage';
 import RegisterPeristentFormPage from '../pages/RegisterPeristentFormPage/RegisterPeristentFormPage';
 import RegisterPersonPage from '../pages/RegisterPersonPage/RegisterPersonPage';
-import RootPage from '../pages/RootPage/RootPage';
 
 const RootNavigation = createBrowserRouter([
   {
     path: '/',
-    element: <RootPage />,
+    element: <App />,
     children: [
       { index: true, element: <FormPage /> },
       { path: ':groupId', element: <FormPage /> },
@@ -60,7 +60,8 @@ const RootNavigation = createBrowserRouter([
   { 
     path: 'onboarding', element: <OnboardingWrapperPage /> ,
     children: [
-      { index: true, element: <OnboardingIntroPage /> },
+      { index: true, element: <Navigate to="step/intro" /> },
+      { path: 'step/intro', element: <OnboardingIntroPage /> },
       { path: 'step/info', element: <OnboardingInfoPage /> },
       { path: 'step/broker', element: <OnboardingSelectBrokerPage /> },
       { path: 'step/persons', element: <OnboardingAddPersonPage /> },

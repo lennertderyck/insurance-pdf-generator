@@ -4,7 +4,8 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/nl-be';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import { RouterProvider } from 'react-router-dom';
+import RootNavigation from './components/navigation/RootNavigation';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import { QUERY_CLIENT } from './utils/vendors/Tanstack/ReactQuery';
@@ -18,7 +19,7 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={QUERY_CLIENT}>
       <Analytics debug={process.env.NODE_ENV === 'development'} />
-      <App />
+      <RouterProvider router={RootNavigation} />
     </QueryClientProvider>
   </React.StrictMode>
 );

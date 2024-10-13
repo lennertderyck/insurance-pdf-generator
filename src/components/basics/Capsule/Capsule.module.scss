@@ -23,3 +23,9 @@
 .subheader {
   @apply text-gray-600 text-base leading-4;
 }
+
+.alignStart {
+  .prefix, .suffix {
+    align-self: flex-start;
+  }
+}

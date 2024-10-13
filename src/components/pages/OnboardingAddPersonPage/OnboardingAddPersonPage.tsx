@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { usePersistentPersonsStore } from '../../../state/stores/usePersistentPersonsStore';
+import useOnboarding from '../../../utils/hooks/useOnboarding';
 import Icon from '../../basics/Icon/Icon';
 import CardGroup from '../../elements/CardGroup/CardGroup';
 import LinkWithTransition from '../../elements/LinkWithTransition/LinkWithTransition';
@@ -9,6 +10,7 @@ import PersonForm from '../../forms/PersonForm/PersonForm';
 interface Props {};
 
 const OnboardingAddPersonPage: FC<Props> = () => {
+  const confirmStep = useOnboarding('persons').confirmStep;
   const persons = usePersistentPersonsStore(state => state.persons);
   const addPerson = usePersistentPersonsStore(state => state.addPerson);
   
@@ -33,7 +35,7 @@ const OnboardingAddPersonPage: FC<Props> = () => {
       }
       <div className="mt-8 flex flex-row gap-4 justify-center">
         <LinkWithTransition to={-1}>Vorige</LinkWithTransition>
-        <LinkWithTransition to="/onboarding/step/events">Volgende</LinkWithTransition>
+        <button onClick={confirmStep} className="button">Volgende</button>
       </div>
     </div>
   )

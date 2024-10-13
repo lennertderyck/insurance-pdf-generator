@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Generator } from '../../../utils/funcs/generate';
-import Icon from '../../basics/Icon/Icon';
+import Dialog from '../../elements/Dialog/Dialog';
 
 interface Props {};
 
@@ -49,10 +49,13 @@ const GenerateResultPage: FC<Props> = () => {
   return (
     <div className="flex flex-col items-center justify-center">
       { process.env.NODE_ENV === 'development' && (
-        <div className="bg-gray-100 p-4 md:p-6 rounded-xl mb-12 md:mb-16 flex flex-row gap-4">
-          <Icon name="bug-line" />
-          <p>Automatisch genereren is uitgeschakeld in development mode.</p>
-        </div>
+        <>
+          <Dialog 
+            className="mb-12 md:mb-16"
+            icon="bug-line"
+            children="Automatisch genereren is uitgeschakeld in development mode."
+          />
+        </>
       )}
       {!!!personParam && !!!eventParam ? (
         <>
