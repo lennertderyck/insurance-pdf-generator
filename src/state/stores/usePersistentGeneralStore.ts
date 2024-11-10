@@ -5,8 +5,8 @@ interface UsePersistentGeneralStoreInterface {
   broker: string | null;
   setBroker: (brokerId: string) => void;
   
-  onboardingSteps: string[];
-  setOnboardingStep: (step: string) => void;
+  isOnboarded: boolean;
+  completeOnboarding: () => void;
 }
 
 export const usePersistentGeneralStore = create(
@@ -15,10 +15,8 @@ export const usePersistentGeneralStore = create(
       broker: null,
       setBroker: (brokerId: string) => set({ broker: brokerId }),
       
-      onboardingSteps: [],
-      setOnboardingStep: (step) => set((state) => ({
-        onboardingSteps: [...state.onboardingSteps, step]
-      })),
+      isOnboarded: false,
+      completeOnboarding: () => set({ isOnboarded: true }),
     }),
     {
       name: "generalStore", // unique name

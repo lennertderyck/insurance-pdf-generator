@@ -22,18 +22,20 @@ const Capsule: FC<CapsuleProps> = ({ Prefix, Title, Subheader, Suffix, onClick, 
   }, [Subheader]);
   
   return (
-    <div className={classNames(styles.container, alignlentClass)}>
-      <div className={styles.main} onClick={onClick}>
-        <div className={styles.prefix}>
-          {Prefix}
+    <div className={styles.wrapper}>
+      <div className={classNames(styles.container, alignlentClass)}>
+        <div className={styles.main} onClick={onClick}>
+          <div className={styles.prefix}>
+            {Prefix}
+          </div>
+          <div>
+            {RenderedTitle}
+            {RenderedSubheader}
+          </div>
         </div>
-        <div>
-          {RenderedTitle}
-          {RenderedSubheader}
+        <div className={styles.suffix}>
+          {Suffix}
         </div>
-      </div>
-      <div className={styles.suffix}>
-        {Suffix}
       </div>
     </div>
   )

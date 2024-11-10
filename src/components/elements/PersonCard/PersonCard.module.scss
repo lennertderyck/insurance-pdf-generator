@@ -1,7 +1,29 @@
-.avatar {
-  @apply p-2 bg-cyan-50 rounded-full text-cyan-500;
-}
-
-.wrapper {
-  @apply border border-cyan-100 rounded-xl p-4 w-fit;
+.subheader {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  
+  @apply text-gray-600 text-base leading-4;
+  
+  .part {
+    white-space: nowrap;
+    
+    .divider {
+      @apply mx-2
+    }
+    
+    &:last-child .divider {
+      display: none;
+    }
+  }
+  
+  &.active {
+    flex-direction: column;
+    
+    @apply text-lg text-black;
+    
+    .divider {
+      display: none;
+    }
+  }
 }

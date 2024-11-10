@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { usePersistentGeneralStore } from '../../../state/stores/usePersistentGeneralStore';
 import { brokers } from '../../../utils/data/brokers';
-import useOnboarding from '../../../utils/hooks/useOnboarding';
 import Icon from '../../basics/Icon/Icon';
 import BrokerCard from '../../elements/BrokerCard/BrokerCard';
 import CardGroup from '../../elements/CardGroup/CardGroup';
@@ -10,7 +9,6 @@ import LinkWithTransition from '../../elements/LinkWithTransition/LinkWithTransi
 interface Props {};
 
 const OnboardingSelectBrokerPage: FC<Props> = () => {
-  const confirmStep = useOnboarding('broker').confirmStep;
   const selectedBroker = usePersistentGeneralStore(state => state.broker);
   const selectBroker = usePersistentGeneralStore(state => state.setBroker);
   const brokersList = Object.entries(brokers);
@@ -36,7 +34,7 @@ const OnboardingSelectBrokerPage: FC<Props> = () => {
     </div>
     <div className="mt-8 flex flex-row gap-4">
       <LinkWithTransition to={-1}>Vorige</LinkWithTransition>
-      <button onClick={confirmStep} className="button">Volgende</button>
+      <LinkWithTransition to="/onboarding/step/persons">Volgende</LinkWithTransition>
     </div>
   </div>
   )

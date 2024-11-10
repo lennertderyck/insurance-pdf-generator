@@ -4,7 +4,6 @@
  */
 const AUTO_IMPORT_SCSS_FILES = [
   'src/scss/mixins/index.scss',
-  'src/scss/variables.scss',
 ]
 
 module.exports = {

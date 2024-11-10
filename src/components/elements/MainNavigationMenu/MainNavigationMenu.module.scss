@@ -1,0 +1,16 @@
+.container {
+  @apply sticky top-4;
+}
+
+.indicator {
+  position: fixed;
+  opacity: 0;
+  @apply rounded-lg border-2 border-gray-200;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.container:hover .indicator {
+  opacity: 1;
+}

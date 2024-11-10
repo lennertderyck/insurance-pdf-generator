@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { usePersistentEventsStore } from "../../../state/stores/usePersistentEventsStore";
 import { usePersistentPersonsStore } from "../../../state/stores/usePersistentPersonsStore";
 import Dialog from '../../elements/Dialog/Dialog';
@@ -23,15 +23,17 @@ const FormPage: FC<Props> = () => {
     })
   }
   
+  const [value, setValue] = useState<string | number | null>(1)
+  
   return (
     <>
-      <Dialog
+      {/* <Dialog
         icon="spy-fill"
         Title="Privacy"
         className="mb-12 md:mb-16"
       >
         Je gegevens worden uitsluitend lokaal opgeslagen en verwerkt. Hierdoor blijven ze volledig in jouw beheer en wordt de veiligheid van je data gegarandeerd. Je data wordt dus niet met ons of externe partijen gedeeld.
-      </Dialog>
+      </Dialog> */}
       <div className="divide-y *:py-12">
         <div style={{ viewTransitionName: 'personsRegister' }}>
           <ManagePersonsSection />

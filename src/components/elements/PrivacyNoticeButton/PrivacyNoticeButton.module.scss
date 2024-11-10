@@ -1,0 +1,30 @@
+.context {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  background-color: #00000035; 
+  // view-transition-name: privacy-notice-context;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  @apply border-none gap-3 w-full;
+}
+
+.modal {
+  // view-transition-name: privacy-notice;
+}
+
+.context.active .modal {  
+  @apply flex items-center justify-center;
+}
+
+.content {
+  width: 300px;
+  @apply border border-gray-300 rounded-lg gap-3;
+}
+
+// ::view-transition-group(privacy-notice-context) {
+//   z-index: 10000;
+// }

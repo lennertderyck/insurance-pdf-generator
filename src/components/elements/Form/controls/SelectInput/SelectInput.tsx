@@ -1,22 +1,33 @@
-import classNames from 'classnames';
-import { FC, SelectHTMLAttributes, useId } from 'react';
-import { useFormContext } from 'react-hook-form';
-import styles from './SelectInput.module.scss';
+import { Children, FC } from 'react';
+import { useController } from 'react-hook-form';
+import AnimatedSelectInput from '../AnimatedSelectInput/AnimatedSelectInput';
 
-interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
+interface Props {
   name: string;
   label: string;
+  children?: React.ReactNode;
+  options?: { value: string | number, label: string }[];
+  value?: string | number;
+  disabled?: boolean;
 };
 
-const SelectInput: FC<Props> = ({ label, name, ...otherProps }) => {
-  const { register } = useFormContext();
-  const id = useId();
+const SelectInput: FC<Props> = ({ label, name, options, children, disabled }) => {
+  const finalOptions = Children.toArray(children).map((child: any) => ({ value: child.props.value, label: child.props.children })) || options;
+  const { field } = useController({ name, defaultValue: finalOptions?.[0]?.value });
+  
+  const disabledPropSet = disabled !== undefined;
+  const insufficientOptions = finalOptions.length < 2;
+  const canDisableForInsufficientOptions = disabledPropSet === false && insufficientOptions;
   
   return (
-    <div>
-      <label className={styles.label} htmlFor={id}>{ label }</label>
-      <select {...register(name)} className={classNames(styles.controller)} {...otherProps} />
-    </div>
+    <AnimatedSelectInput 
+      label={label}
+      name={name}
+      options={finalOptions}
+      onChange={field.onChange}
+      value={field.value}
+      disabled={canDisableForInsufficientOptions}
+    />
   )
 }
 

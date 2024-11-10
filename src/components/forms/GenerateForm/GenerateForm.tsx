@@ -35,17 +35,21 @@ const GenerateForm: FC<Props> = ({ onSubmit }) => {
   return (
     <Form onSubmit={onSubmit}>
       <div className="flex flex-row gap-4 mb-4">
-        <SelectInput label="Ziekenfonds" name="broker">
-          {Object.entries(brokers).map(([key, brokerInfo]) => (
-            <option key={key} value={key}>{brokerInfo.name}</option>
-          ))}
-        </SelectInput>
-        <SelectInput label="Activiteit" name="event">
-          {events?.length === 0 && <option value="">Geen activiteiten beschikbaar</option>}
-          {events?.map((event, index) => (
-            <option value={event.id} key={index}>{event.name} van {dayjs(event?.period?.start).format('DD/MM/YYYY')} - {dayjs(event?.period?.end).format('DD/MM/YYYY')}</option>
-          ))}
-        </SelectInput>
+        <div className="flex-1">
+          <SelectInput label="Ziekenfonds" name="broker">
+            {Object.entries(brokers).map(([key, brokerInfo]) => (
+              <option key={key} value={key}>{brokerInfo.name}</option>
+            ))}
+          </SelectInput>
+        </div>
+        <div className="flex-1">
+          <SelectInput label="Activiteit" name="event">
+            {events?.length === 0 && <option value="">Geen activiteiten beschikbaar</option>}
+            {events?.map((event, index) => (
+              <option value={event.id} key={index}>{event.name} van {dayjs(event?.period?.start).format('DD/MM/YYYY')} - {dayjs(event?.period?.end).format('DD/MM/YYYY')}</option>
+            ))}
+          </SelectInput>
+        </div>
         {/* <Input name="export" label="Automatisch downloaden" type="checkbox" defaultChecked /> */}
       </div>
       <PersonSelect />
