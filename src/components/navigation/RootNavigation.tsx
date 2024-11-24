@@ -8,6 +8,7 @@ import NerdsOverviewPage from '../pages/NerdsOverviewPage/NerdsOverviewPage';
 import RegisterEventPage from '../pages/RegisterEventPage/RegisterEventPage';
 import RegisterPeristentFormPage from '../pages/RegisterPeristentFormPage/RegisterPeristentFormPage';
 import RegisterPersonPage from '../pages/RegisterPersonPage/RegisterPersonPage';
+import ResetStatePage from '../pages/ResetStatePage/ResetStatePage';
 import RootPage from '../pages/RootPage/RootPage';
 
 const RootNavigation = createBrowserRouter([
@@ -50,6 +51,7 @@ const RootNavigation = createBrowserRouter([
   { path: 'intro', element: <>Intro</> }, // template around modal
   { path: 'export', element: <ExportPage />},
   { path: 'import', element: <ImportPage />},
+  { path: 'help/reset', element: <ResetStatePage />},
 ]);
 
 export default RootNavigation;
