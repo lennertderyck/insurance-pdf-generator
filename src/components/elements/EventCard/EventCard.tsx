@@ -22,25 +22,11 @@ const EventCard: FC<Props> = ({ event, onClick, onEdit, onDelete, onArchive }) =
       Prefix={<Icon name="home-smile-2-line" />}
       Title={event.name} 
       Subheader={`${eventStart} tot ${eventEnd}`} 
-      Suffix={
-        <div className="flex flex-row gap-4">
-          {onEdit ? 
-            <button onClick={onEdit} disabled>
-              <Icon name="edit-2-line" />
-            </button> :
-            undefined}
-          {onDelete ? 
-            <button onClick={onDelete}>
-              <Icon name="delete-bin-2-line" />
-            </button> :
-            undefined}
-          {onArchive ? 
-            <button onClick={onArchive}>
-              <Icon name={event.archived ? 'inbox-unarchive-line' : 'inbox-archive-line'} />
-            </button> :
-            undefined}
-        </div>
-      }
+      actions={[
+        // { icon: 'edit-2-line', onClick: onEdit },
+        { icon: 'delete-bin-2-line', onClick: onDelete },
+        { icon: event.archived ? 'inbox-unarchive-line' : 'inbox-archive-line', onClick: onArchive }
+      ]}
     />
   )
 }

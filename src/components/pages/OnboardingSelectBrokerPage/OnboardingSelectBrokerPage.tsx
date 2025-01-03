@@ -20,7 +20,7 @@ const OnboardingSelectBrokerPage: FC<Props> = () => {
       <h3 className="ani-title">Ziekenfonds</h3>
       <p>Selecteer je ziekenfonds</p>
     </div>
-    <div className="mt-4">
+    <div className="mt-4 w-full">
       <CardGroup>
         {brokersList.map(([key, broker]) => (
           <div key={key} onClick={() => selectBroker(key)}>
