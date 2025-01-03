@@ -2,6 +2,7 @@
   "name": "insurance-pdf-generator",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@craco/craco": "^7.1.0",
     "@floating-ui/react": "^0.26.25",
