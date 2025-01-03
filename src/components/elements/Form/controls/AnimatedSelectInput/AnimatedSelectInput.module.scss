@@ -1,0 +1,100 @@
+.controller {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  @apply border border-gray-200 rounded-lg w-full px-4;
+  
+  &.disabled {
+    cursor: default;
+    @apply bg-gray-100;
+  }
+}
+
+.labelWrapper {
+  width: 100%; // makes sure that the text size doenst animate
+  user-select: none;
+  @apply py-3;
+  
+  .label {
+    display: block;
+    width: 100%
+  }
+}
+  
+
+.icon {
+  &.disabled {
+    @apply text-gray-400;
+  }
+}
+
+.optionsWrapper {
+  z-index: 1;
+  max-height: 0vh;
+  overflow: clip;
+  transition: all .3s ease;
+  translate: 0px -10px;
+  opacity: 0;
+  
+  &.visible {
+    max-height: 100vh;
+    translate: 0px 0px;
+    opacity: 1;
+  }
+}
+
+.options {
+  @apply border border-gray-200 bg-white rounded-lg py-1.5;
+  
+  .option {
+    cursor: pointer;
+    @apply mx-1.5 px-2.5 py-1.5 rounded-md;
+    
+    &:hover {
+      @apply bg-gray-200;
+    }
+    
+    &.selected {
+      @apply bg-gray-200;
+    }
+  }
+}
+
+::view-transition-group(label) {
+  animation-duration: .5s;
+  animation-direction: forwards;
+  object-position: left;
+  object-fit: none;
+  overflow: clip;
+}
+
+::view-transition-old(label) {
+  animation-name: translateOld;
+}
+::view-transition-new(label) {
+  animation-name: translateNew;
+}
+
+@keyframes translateOld {
+  from {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes translateNew {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}

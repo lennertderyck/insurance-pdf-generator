@@ -28,7 +28,7 @@ const EventForm: FC<Props> = ({ onSubmit }) => {
         <Input label="Startdatum" name="period.start" type="date" />
         <Input label="Einddatum" name="period.end" type="date" />
       </div>
-      <SelectInput label="Groep" name="group" >
+      <SelectInput label="Groep" name="group">
         {availableGroups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
       </SelectInput>
       <button type="submit" className="mt-4">Activiteit toevoegen</button>

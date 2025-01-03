@@ -22,6 +22,7 @@ const RegisterPersonPage: FC<Props> = () => {
       title="Nieuwe persoon"
       subheader="Vul de gegevens in van de nieuwe persoon."
       divider={false}
+      sectionHeaderStyle={{ viewTransitionName: 'personsRegister' }}
     >
       <PersonForm onSubmit={registerPerson} />
     </Section>

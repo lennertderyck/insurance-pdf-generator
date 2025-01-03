@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@view-transition {
-  navigation: auto;
-}
-
 * {
   @apply font-display;
 }
@@ -14,10 +10,14 @@ html, body, #root {
   @apply h-full bg-gray-100;
 }
 
+.withBorder {
+  @apply border border-gray-300;
+}
+
 button, .button {
   display: block;
   width: fit-content;
-  @apply bg-white text-black border border-gray-300 font-bold py-2 px-4 rounded;
+  @apply bg-white text-black border border-gray-300 font-bold py-2 px-4 rounded disabled:opacity-40;
 }
 
 input, select {
@@ -25,7 +25,7 @@ input, select {
 }
 
 hr {
-  @apply border-b my-8;
+  @apply border-t my-8 border-gray-200;
 }
 
 h2 {
@@ -46,4 +46,16 @@ h5 {
 
 section + section {
   @apply mt-16 md:mt-24;
+}
+
+.ani-icon {
+  view-transition-name: icon;
+}
+
+.ani-title {
+  view-transition-name: title;
+}
+
+.ani-container {
+  view-transition-name: container;
 }

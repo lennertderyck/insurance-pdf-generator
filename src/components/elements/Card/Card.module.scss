@@ -1,0 +1,57 @@
+.wrapper {
+  position: relative;
+  @apply px-4 py-3;
+  
+  &, &::after {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    @apply border-8 border-white rounded-xl;
+  }
+}
+
+.hasClickEvent {
+  cursor: pointer;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    @apply border-8 border-white rounded-xl;
+  }
+  
+  &:hover {
+    @apply bg-gray-100;
+  
+    &::after {
+      @apply border-2;
+    }
+  }
+}
+
+// .actionsWrapper {
+//   container-name: actions;
+//   container-type: inline-size;
+//   flex: 1;
+// }
+
+.actions {
+  @apply flex flex-row gap-4;
+}
+
+// @container actions (width < 300px) {
+//   .actions {
+//     @apply gap-4;
+    
+//     button {
+//       display: block;
+//       flex: 1;
+//     }
+//   }
+// }

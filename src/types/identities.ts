@@ -26,6 +26,7 @@ export interface Event {
     start: string;
     end: string;
   };
+  archived: boolean | null;
 }
 export type EventInput = Omit<Event, 'id'>;
 
@@ -39,4 +40,10 @@ export interface Group {
     gemeente: string;
   }[];
   [key: string]: any;
+}
+
+export interface Broker {
+  id: string;
+  name: string;
+  nameShort: string;
 }
