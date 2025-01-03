@@ -6,7 +6,7 @@ const AUTO_IMPORT_SCSS_FILES = [
   'src/scss/mixins/index.scss',
 ]
 
-module.exports = {
+export default {
   style: {
     sass: {
       loaderOptions: {
