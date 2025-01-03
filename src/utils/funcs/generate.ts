@@ -15,9 +15,10 @@ interface FormGeneratorInput {
 }
 
 export const getGroupInfoEndpoint = (group: string) => {
-  const corsProxy = 'https://corsproxy.io/';
+  // const corsProxy = 'https://corsproxy.io/';
   const gaEndpoint = `https://groepsadmin.scoutsengidsenvlaanderen.be/groepsadmin/rest-ga/groep`;
-  return `${corsProxy}?${gaEndpoint}/${group}`;
+  // return `${corsProxy}?${gaEndpoint}/${group}`;
+  return gaEndpoint;
 }
 
 export const Generator = {
