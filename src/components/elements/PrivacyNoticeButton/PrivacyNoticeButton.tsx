@@ -10,7 +10,10 @@ const PrivacyNoticeButton: FC<Props> = () => {
   const [showMore, setShowMore] = useState(false);
   
   const triggerTransition = () => {
-    document.startViewTransition(() => {
+    if (!document.startViewTransition) {
+      setShowMore(c => !c);
+    }
+    else document.startViewTransition(() => {
       setShowMore(c => !c);
     })
   }

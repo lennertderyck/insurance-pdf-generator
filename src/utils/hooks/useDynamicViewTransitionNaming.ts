@@ -18,14 +18,18 @@ const useDynamicViewTransitionNaming: DynamicViewTransitionNamingHook = (viewTra
   const [applyTransition, setApplyTransition] = useState(false);
   
   const startTransition: TransitionInitiator = (callback) => {
-    setApplyTransition(true);
-    console.log('startTransition');
-    document
-      .startViewTransition(callback)
-      .finished.then(() => {
-        setApplyTransition(false);
-        console.log('endTransition');
-      })
+    if (!document.startViewTransition) {
+      callback();
+      setApplyTransition(false);
+    } else {
+      setApplyTransition(true);
+      document
+        .startViewTransition(callback)
+        .finished.then(() => {
+          setApplyTransition(false);
+          console.log('endTransition');
+        })
+    }
   }
   
   const dynamicStyle: DynamicStyle = applyTransition  ? viewTransitionName : undefined;

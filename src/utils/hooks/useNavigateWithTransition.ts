@@ -5,7 +5,10 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 const useNavigateWithTransition = (): NavigateFunction => {
   const defaultNavigate = useNavigate();
   const animatedNavigate = (path: any) => {
-    document.startViewTransition(() => {
+    if (!document.startViewTransition) {
+      defaultNavigate(path);
+    }
+    else document.startViewTransition(() => {
       flushSync(() => {
         defaultNavigate(path);
       });
