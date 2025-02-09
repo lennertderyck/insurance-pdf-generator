@@ -1,6 +1,7 @@
 import { cmTemplate } from "./templates/cm/template";
 import { helanTemplate } from "./templates/helan/template";
 import { lmTemplate } from "./templates/lm/template";
+import { neutraalTemplate } from "./templates/neutraal/template";
 
 export const brokers = {
   'cm': {
@@ -17,5 +18,10 @@ export const brokers = {
     name: 'Liberale Mutualiteit',
     nameShort: 'LM',
     template: lmTemplate
+  },
+  'nzvl': {
+    name: 'Neutraal Ziekenfonds',
+    nameShort: 'Neutraal Ziekenfonds',
+    template: neutraalTemplate
   }
 }

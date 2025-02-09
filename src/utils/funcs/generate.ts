@@ -17,7 +17,7 @@ interface FormGeneratorInput {
 export const getGroupInfoEndpoint = (group: string) => {
   // const corsProxy = 'https://corsproxy.io/';
   const origin = window.location.origin;
-  const base = '/api/groups';
+  const base = 'api/groups';
   return [origin, base, group].join('/');
 }
 
@@ -31,6 +31,7 @@ export const Generator = {
     
     return {
       check: 'X',
+      check2: 'X',
       
       registredOrganisation: 'Scouts en Gidsen Vlaanderen',
 
