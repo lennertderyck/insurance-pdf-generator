@@ -1,6 +1,7 @@
 import { hdbStamp } from "./stamps/hdb";
 import { hpStamp } from "./stamps/hp";
 import { luciaStamp } from "./stamps/lucia";
+import { jovaStamp } from "./stamps/jova";
 
 export const groups = {
   'O1306G': {
@@ -18,6 +19,11 @@ export const groups = {
     name: 'Sint-Lucia',
     stamp: luciaStamp,
   },
+  'O1308G': {
+    id: 'O1308G',
+    name: 'Jova',
+    stamp: jovaStamp
+  }
   // 'O1304G': {
   //   name: 'Sint-Bernadette',
   // },
